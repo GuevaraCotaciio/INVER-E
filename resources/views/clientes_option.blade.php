@@ -5,7 +5,7 @@
    <!-- ======= Content  ======= -->
   <main class="col-12 ps-1 pb-3" style="background-color: #e8edf4;">
 
-    <!-- Tirulos modulos-->
+    <!-- Titulos modulos-->
     <div class="pagetitle ps-4">
       <h1>Clientes</h1>
       <nav>

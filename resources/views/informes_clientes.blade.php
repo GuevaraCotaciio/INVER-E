@@ -1,5 +1,6 @@
 <head>
     <title>Inver-E / Informes-Clientes</title>
+    <link rel="stylesheet" href="{{ public_path('styles/style_reportes.css') }}" type="text/css">
 </head>
     <!-- ======= Header ======= -->
     @include('Templates.nav')
@@ -78,7 +79,7 @@
                                                 <td class="border-top">{{$infocliente->nombre }} {{$infocliente->apellido }}</td>
                                                 <td class="border-top">{{$infocliente->documento }}</td>
                                                 <td class="border-top">{{$infocliente->genero }}</td>
-                                                <td class="border-top">{{$infocliente->edad }}</td>
+                                                <td class="border-top">{{$infocliente->fecha_nacimiento }}</td>
                                                 <td class="border-top">{{$infocliente->telefono }}</td>
                                                 <td class="border-top">{{$infocliente->ciudad }}</td>
                                                 <td class="border-top">{{$infocliente->direccion }}</td>
@@ -131,7 +132,7 @@
                                                 <td class="border-top">{{$Pedidocliente->nombre }} {{$Pedidocliente->apellido }}</td>
                                                 <td class="border-top">{{$Pedidocliente->documento }}</td>
                                                 <td class="border-top">{{$Pedidocliente->genero }}</td>
-                                                <td class="border-top">{{$Pedidocliente->edad }}</td>
+                                                <td class="border-top">{{$Pedidocliente->fecha_nacimiento }}</td>
                                                 <td class="border-top">{{$Pedidocliente->telefono }}</td>
                                                 <td class="border-top">{{$Pedidocliente->ciudad }}</td>
                                                 <td class="border-top">{{$Pedidocliente->direccion }}</td>
@@ -184,7 +185,7 @@
                                                 <td class="border-top">{{$productocliente->nombre }} {{$productocliente->apellido }}</td>
                                                 <td class="border-top">{{$productocliente->documento }}</td>
                                                 <td class="border-top">{{$productocliente->genero }}</td>
-                                                <td class="border-top">{{$productocliente->edad }}</td>
+                                                <td class="border-top">{{$productocliente->fecha_nacimiento }}</td>
                                                 <td class="border-top">{{$productocliente->telefono }}</td>
                                                 <td class="border-top">{{$productocliente->ciudad }}</td>
                                                 <td class="border-top">{{$productocliente->direccion }}</td>

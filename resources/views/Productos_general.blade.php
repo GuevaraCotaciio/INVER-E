@@ -62,10 +62,10 @@
 
                         <div class="col-sm-3 bg-white ms-4" >
                            <div class="card-body">
-                              <a class=" nav-link" href="{{ route('productos.ver') }}"><h5 class="card-title">Todos los productos</h5></a>
+                              <a class=" nav-link" href="{{ route('productos.list') }}"><h5 class="card-title">Todos los productos</h5></a>
                               <div class="d-flex align-items-center">
                                 <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                                  <a href="{{ route('productos.ver') }}"><i class="bi bi-cart4" style="color: #2eca6a;"></i></a>
+                                  <a href="{{ route('productos.list') }}"><i class="bi bi-cart4" style="color: #2eca6a;"></i></a>
                                 </div>
                                 <div class="ps-2">
                                   <h6>145</h6>
@@ -104,6 +104,12 @@
                                 </ul>
                             </div>
 
+                            @if (session()->has('fine'))
+                            <div class="alert alert-success border-2 border-success ms-4 me-4">{{ session('fine')}}</div>
+                            @elseif (session()->has('fail'))
+                            <div class="alert alert-danger">{{ session('fail')}}</div>
+                            @endif
+
                             <div class="card-body">
                                 <h5 class="card-title">Productos Disponibles</h5>
 
@@ -137,7 +143,7 @@
                                               <td class="border-bottom">{{$productoDisp->calibre_producto }}</td>
                                               <td class="border-bottom">{{$productoDisp->clasificacion_producto }}</td>
                                               <td class="border-bottom">{{$productoDisp->cantidad }}</td>
-                                              <td class="border-bottom">{{$productoDisp->duracion }}</td>
+                                              <td class="border-bottom">dias</td>
                                               <td class="border-bottom">{{$productoDisp->fecha_vencimiento }}</td>
                                               <td class="border-bottom">{{$productoDisp->peso_unitario }}</td>
                                               <td class="border-bottom">{{$productoDisp->valor_venta }}</td>
@@ -210,7 +216,7 @@
                                         <td class="border-bottom">{{$productoVencer->calibre_producto }}</td>
                                         <td class="border-bottom">{{$productoVencer->clasificacion_producto }}</td>
                                         <td class="border-bottom">{{$productoVencer->cantidad }}</td>
-                                        <td class="border-bottom">{{$productoVencer->duracion }}</td>
+                                        <td class="border-bottom">dias</td>
                                         <td class="border-bottom">{{$productoVencer->fecha_vencimiento }}</td>
                                         <td class="border-bottom">{{$productoVencer->peso_unitario }}</td>
                                         <td class="border-bottom">{{$productoVencer->valor_venta }}</td>
@@ -282,7 +288,7 @@
                                       <td class="border-bottom">{{$productoVenc->calibre_producto }}</td>
                                       <td class="border-bottom">{{$productoVenc->clasificacion_producto }}</td>
                                       <td class="border-bottom">{{$productoVenc->cantidad }}</td>
-                                      <td class="border-bottom">{{$productoVenc->duracion }}</td>
+                                      <td class="border-bottom">días</td>
                                       <td class="border-bottom">{{$productoVenc->fecha_vencimiento }}</td>
                                       <td class="border-bottom">{{$productoVenc->peso_unitario }}</td>
                                       <td class="border-bottom">{{$productoVenc->valor_venta }}</td>

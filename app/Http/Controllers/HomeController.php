@@ -28,7 +28,7 @@ class HomeController extends Controller
 
         $dia = date('Y-m-d');
         $Productos=DB::table('producto')
-        ->select('id', 'nombre', 'estado_producto', 'calibre_producto', 'clasificacion_producto', 'cantidad', 'duracion', 'fecha_vencimiento', 'peso_unitario', 'valor_venta', 'valor_compra')
+        ->select('id', 'nombre', 'estado_producto', 'calibre_producto', 'clasificacion_producto', 'cantidad', 'fecha_vencimiento', 'peso_unitario', 'valor_venta', 'valor_compra')
         ->where('tipo_producto', 'Producido')
         ->where('estado_producto', 'Disponible')
         ->where('fecha_vencimiento','>','"'.$dia.'"')

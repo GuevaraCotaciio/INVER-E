@@ -22,7 +22,7 @@
 
     <div class="card ms-2 me-3">
       <div class="card-body m-4">
-        <h4 class="card-title mb-5">Crear nuevo Producto</h4>
+        <h4 class="card-title mb-3">Crear nuevo Producto</h4>
 
         <!-- ======== Formulario General ======== -->
         <form action="{{ route('productos.save') }}" method="POST" enctype="multipart/form-data">
@@ -50,10 +50,11 @@
                 </div>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="inputText" class="col-2 col-form-label">Nombre</label>
             <div class="col-10">
-                <input type="text" name="Firstname" class="form-control form-control-lg" placeholder="* Producto">
+                <input type="text" name="namep" class="form-control form-control-lg" placeholder="* Producto">
             </div>
           </div>
 
@@ -72,15 +73,15 @@
                 <select class="form-select form-select-lg" name="tipoProducto">
                   <option selected>Seleccione el tipo</option>
                   <option value="Producido">Producido</option>
-                  <option value="adquirido">Adquirido</option>
+                  <option value="Adquirido">Adquirido</option>
                 </select>
 
                 <select class="form-select form-select-lg" name="tipoClase">
                   <option selected>Seleccione la clase </option>
-                  <option value="Producido">Carne</option>
-                  <option value="adquirido">Condimentos</option>
-                  <option value="adquirido">Implementos</option>
-                  <option value="adquirido">Chorizos</option>
+                  <option value="Carne">Carne</option>
+                  <option value="Condimentos">Condimentos</option>
+                  <option value="Implementos">Implementos</option>
+                  <option value="Chorizos">Chorizos</option>
                 </select>
               </div>
             </div>
@@ -91,24 +92,25 @@
             <div class="col-sm-10">
               <select class="form-select form-select-lg" name="calibre">
                 <option selected>Selecciona el calibre</option>
-                <option value="Hombre">Calibre #8</option>
-                <option value="Hombre">Calibre #10</option>
-                <option value="Hombre">Calibre #12</option>
+                <option value="Calibre #8">Calibre #8</option>
+                <option value="Calibre #10">Calibre #10</option>
+                <option value="Calibre #12">Calibre #12</option>
               </select>
             </div>
           </div>
 
           <div class="row mb-3">
-            <label for="number" class="col-sm-2 col-form-label">Cantidad</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control form-control-lg" name="cantidad" placeholder="* Cantidad del producto">
-            </div>
+                <label for="number" class="col-sm-2 col-form-label">Cantidad</label>
+                <div class=" col-sm-10">
+                        <input type="number" class="form-control form-control-lg" name="cantidad" placeholder="* Cantidad del producto">
+                </div>
           </div>
+
 
           <div class="row mb-3">
             <label for="inputEmail" class="col-sm-2 col-form-label">Proveedor</label>
             <div class="col-sm-10 ">
-              <input type="text" class="form-control form-control-lg" name="email" placeholder="Nombre Proveedor">
+              <input type="text" class="form-control form-control-lg" name="IDproveedor" placeholder="Nombre Proveedor">
             </div>
           </div>
 
@@ -122,33 +124,39 @@
 
 
           <div class="row mb-3">
-            <label for="number" class="col-sm-2 col-form-label">Duración</label>
-            <div class="col-sm-10">
-                <div class="input-group">
-                    <div class="input-group-text" > Días </div>
-                    <input type="number" class="form-control form-control-lg" name="duracion" placeholder="Duración del producto">
+            <label for="number" class="col-sm-2 col-form-label">Peso Unitario</label>
+            <div class=" row col-sm-10">
+                <div class="col-lg-7">
+                    <div class="input-group">
+                        <div class="input-group-text" > Cantidad </div>
+                        <input type="text" class="form-control form-control-lg" name="pesoUnitario" placeholder="* peso por unidad">
+                    </div>
+                </div>
+              <div class="row col-lg-5 pt-2">
+                <div class="form-check col-lg-4">
+                    <input class="form-check-input" type="radio" name="unidadmedida" id="gramos" value="Gramos" >
+                    <label class="form-check-label" for="gramos">Gramos</label>
+                </div>
+                <div class="form-check col-lg-4">
+                    <input class="form-check-input" type="radio" name="unidadmedida" id="libras" value="Libras" >
+                    <label class="form-check-label" for="libras">Libras</label>
+                </div>
+                <div class="form-check col-lg-4">
+                    <input class="form-check-input" type="radio" name="unidadmedida" id="kilos" value="Kilos" >
+                    <label class="form-check-label" for="kilos">Kilos</label>
+                </div>
                 </div>
             </div>
           </div>
 
-          <div class="row mb-3">
-            <label for="inputadress" class="col-sm-2 col-form-label">Peso Unitario</label>
-            <div class="col-sm-10">
-                <div class="input-group">
-                    <div class="input-group-text" > Kilos </div>
-                    <input type="number" class="form-control form-control-lg" name="pesoUnitario" placeholder="* peso por producto">
-                </div>
-            </div>
-          </div>
-
 
 
           <div class="row mb-3">
-            <label for="inputadress" class="col-sm-2 col-form-label">Precio Neto</label>
+            <label for="inputadress" class="col-sm-2 col-form-label">Precio Producto</label>
             <div class="col-sm-10">
                 <div class="input-group">
-                    <div class="input-group-text"> $ </div>
-                    <input type="number" class="form-control form-control-lg" name="pesoUnitario" placeholder="* peso por producto">
+                    <div class="input-group-text"> $ Pesos </div>
+                    <input type="number" class="form-control form-control-lg" name="preciocompra" placeholder="precio del producto comprado">
                 </div>
             </div>
           </div>
@@ -157,8 +165,8 @@
             <label for="inputadress" class="col-sm-2 col-form-label">Precio comercial</label>
             <div class="col-sm-10">
                 <div class="input-group">
-                    <div class="input-group-text"> $ </div>
-                    <input type="number" class="form-control form-control-lg" name="pesoUnitario" placeholder="* Precio producto">
+                    <div class="input-group-text"> $ Pesos </div>
+                    <input type="number" class="form-control form-control-lg" name="precioventa" placeholder="Precio de venta del producto">
                 </div>
             </div>
           </div>
@@ -168,10 +176,10 @@
           <div class="row  pt-3 pb-3 col-sm-12 align-items-center justify-content-center">
             <div class="col-4"></div>
             <div class="col-2">
-              <button type="submit" class="btn btn-success btn-lg ">Guardar Cliente</button>
+              <button type="submit" class="btn btn-success btn-lg ">Guardar</button>
             </div>
             <div class="col-2">
-              <a href="#!" class="btn btn-info btn-lg  muted">Cancelar</a>
+              <a href="{{ route('productos.general') }}" class="btn btn-info btn-lg  muted">Cancelar</a>
             </div>
             <div class="col-4"></div>
           </div>

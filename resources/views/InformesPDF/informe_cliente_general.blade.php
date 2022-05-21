@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ public_path('css/app.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ public_path('styles/style_reportes.css') }}" type="text/css">
     <title>Inver-E / Reportes</title>
 </head>
 <body>
 
 
     <!-- ======= Contendor Principal  ======= -->
-    <main class="col-12 ps-1" style="background-color: #ffffff;">
+    <main class="report">
+
+        <h4>Reporte General Clientes activos</h4>
 
         <table class="table" id="tablaclientes">
-            <thead>
+            <thead class="cabecera">
                 <tr>
                   <th scope="col" class="border border-white table-primary">ID</th>
                   <th scope="col" class="border border-white table-primary">Nombre</th>
@@ -27,7 +29,7 @@
                   <th scope="col" class="border border-white table-primary">E-mail</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="cuerpo">
                 @if(count($listClientes)<=0)
                   <tr>
                     <td colspan="10" class="text-danger"> No hay registros para el nombre solicitado</td>
@@ -39,7 +41,7 @@
                       <td class="border-top">{{$clientes->nombre }} {{$clientes->apellido }}</td>
                       <td class="border-top">{{$clientes->documento }}</td>
                       <td class="border-top">{{$clientes->genero }}</td>
-                      <td class="border-top">{{$clientes->edad }}</td>
+                      <td class="border-top">{{$clientes->fecha_nacimiento }}</td>
                       <td class="border-top">{{$clientes->telefono }}</td>
                       <td class="border-top">{{$clientes->ciudad }}</td>
                       <td class="border-top">{{$clientes->direccion }}</td>

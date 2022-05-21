@@ -23,15 +23,18 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Rutas del Controlador del modulo Pedidos
+//Rutas de GUI
 Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'pedidos_index'])->name('pedidos.general');
 Route::get('/pedidos/buscar-cliente', [App\Http\Controllers\ClienteController::class, 'clientes_buscar'])->name('pedido_cliente.buscar');
 Route::post('/pedidos/nuevo-pedido', [App\Http\Controllers\ClienteController::class, 'clientes_buscar_pedidos'])->name('pedido_cliente_buscar_datos');
 
 
 
-
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Rutas del Controlador del modulo Configuracion
+//Rutas de GUI
 Route::get('/configuracion', [App\Http\Controllers\ConfigController::class, 'empresa_index'])->name('configuracion.general');
 Route::post('/configuracion-SaveEmpresa', [App\Http\Controllers\EmpresaController::class, 'empresa_save'])->name('configuracion.SaveEmpresa');
 
@@ -40,12 +43,16 @@ Route::post('/configuracion-SaveEmpresa', [App\Http\Controllers\EmpresaControlle
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Rutas del Controlador del modulo Productos
 //Rutas de GUI
-Route::get('/productos', [App\Http\Controllers\ProductoController::class, 'productos_index'])->name('productos.general');
-Route::get('/productos/nuevo', [App\Http\Controllers\ProductoController::class, 'productos_create'])->name('productos.create');
-Route::get('/productos/detalles', [App\Http\Controllers\ProductoController::class, 'productos_show'])->name('productos.ver');
+Route::get('/productos', [App\Http\Controllers\ProductoController::class, 'productos_index'])->name('productos.general');        //ruta general
+Route::get('/productos/nuevo', [App\Http\Controllers\ProductoController::class, 'productos_create'])->name('productos.create');   //Ruta nuevos producos
+Route::get('/productos/lista-productos', [App\Http\Controllers\ProductoController::class, 'productos_list'])->name('productos.list');     //Ruta Ver informacion de productos
+Route::get('/productos/{producto}/actualizar', [App\Http\Controllers\ProductoController::class, 'productos_update'])->name('productos.update'); //Ruta Actualizar Clientes
+Route::get('/productos/{producto}/detalles', [App\Http\Controllers\ProductoController::class, 'productos_show'])->name('productos.show');
 
 //Rutas de acciones
-Route::post('/productos-save', [App\Http\Controllers\ProductoController::class, 'productos_save'])->name('productos.save');
+Route::post('/productos-save', [App\Http\Controllers\ProductoController::class, 'productos_save'])->name('productos.save'); //Guardar
+Route::post('/productos-edit/{producto}', [App\Http\Controllers\ProductoController::class, 'productos_edit'])->name('productos.edit'); //Actualizar
+Route::delete('/productos-delete/{producto}', [App\Http\Controllers\ProductoController::class, 'productos_destroy'])->name('productos.destroy'); //Eliminar
 
 
 
@@ -61,6 +68,7 @@ Route::get('/usuarios/{usuario}/informacion', [App\Http\Controllers\UsuarioContr
 Route::post('/usuarios-save', [App\Http\Controllers\UsuarioController::class, 'usuarios_save'])->name('usuarios.save'); //Guardar
 Route::post('/usuarios-edit/{usuario}', [App\Http\Controllers\UsuarioController::class, 'usuarios_edit'])->name('usuarios.edit'); //Actualizar
 Route::delete('/usuarios-delete/{usuario}', [App\Http\Controllers\UsuarioController::class, 'usuarios_destroy'])->name('usuarios.destroy'); //Eliminar
+
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
