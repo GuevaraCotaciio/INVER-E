@@ -30,13 +30,14 @@
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile col-md-2">
         <li class="dropdown-header ">
           <h6>{{ Auth::user()->name }}</h6>
-          <span> Cargo de la persona</span>
+          <span>{{ Auth::user()->cargo }} </span>
         </li>
 
         <li> <hr class="dropdown-divider"> </li>
 
         <li>
-          <a class="dropdown-item d-flex align-items-center" href="{{ route('configuracion.general') }}">
+
+          <a class="dropdown-item d-flex align-items-center" href="{{ route('configuracion.general', Auth::user()->id) }}">
             <i class="bi bi-gear nav-link"></i> <span>Configuración</span>
           </a>
         </li>
@@ -132,7 +133,7 @@
 
 
           <li class="nav-item">
-            <a class="nav-link collapsed dropdown-item d-flex"  href="{{ route('configuracion.general') }}">
+            <a class="nav-link collapsed dropdown-item d-flex"  href="{{ route('configuracion.general', Auth::user()->id) }}">
               <i class="bi  bi-sliders me-2"></i><span>  Configuración</span>
             </a>
           </li> <hr><!-- End Icons Nav -->

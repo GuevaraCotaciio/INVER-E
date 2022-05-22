@@ -1,28 +1,66 @@
 .report{
     background-color: white;
-
+}
+h4{
+    color:  blue;
 }
 .table{
+    background-color: #f2fffc;
     text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: white;
-    border: 2px;
-    border-color: black;
-    border-radius: 7px;
+    font-family: Georgia;
+    border-color: 1px, black;
+    border-radius:  7px;
+    margin-top: 15px;
 }
 
 .cabecera tr th{
     background-color: #84b6f4;
     font-size: x-small;
-    border: 2px;
+    border: 0px;
     border-color: black;
     padding: 5px;
 }
 
 .cuerpo tr td{
-    background-color: #f2ffff;
     font-size: xx-small;
-    border-bottom: 1px,black;
-    padding: 5px;
+    padding: 6px;
 }
 
+.row{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+.row div{
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* titulo e imagen */
+.row div img{
+    margin: 0px;
+    padding: 5px;
+}
+.row div h4{
+    color: #84b6f4;
+    font-weight: bold;
+    margin: 0px;
+    padding-bottom: 25px;
+}
+
+/* fechas */
+
+.row div p{
+    color: #84b6f4;
+    font-weight: bold;
+    margin: 0px;
+    margin-left: 100px;
+    padding: 5px;
+}
+.row div span{
+    margin: 0px;
+    margin-left: 105px;
+    padding-bottom: 25px;
+
+}

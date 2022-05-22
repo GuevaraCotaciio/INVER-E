@@ -50,31 +50,49 @@ class UsuarioController extends Controller
     {
         return view('usuarios_create');
     }
+
     public function usuarios_save(Request $request) //form guardar datos
     {
-        $persona = new Persona();
-        $user = new User();
+            $user = new User();
+            if ($user->usuario_save($request) == "Guardado"){
 
+                return  redirect()->route('usuarios.datos');  //  view('usuarios_create_datos', compact('datosuser', 'roles'));
+
+            }else{
+                return back()->with("fail", "Error al guardar la información del usuario.");
+            }
+    }
+
+    public function usuarios_datos(Request $request) // retorna datos de usuario guardado
+    {
+        $user = new User();
+        $datosuser = $user->Usuario_creado();
+        $roles = DB::table('roles')->select('id','nombre')->get();
+        return  view('usuarios_create_datos', compact('datosuser', 'roles'));
+
+    }
+
+
+    public function usuarios_informacion(Request $request) //form guardar datos
+    {
+        dd($request);
+
+        $user = new User();
+        $persona = new Persona();
         if($persona->Valida_Persona($request->document) == 'Usuario ya existe'){
-            return back()->with('fail',' El usuario ya existe, intente nuevamente.');
+            return back()->with('fail','El número de documento ya existe, por favor intente nuevamente.');
         }else{
 
-            $nombre = $request->name." ".$request->lastname;
-            if ($user->usuario_save($nombre, $request->email, $request->password) == "Usuario Guardado") {
-
-                $idPersona = $persona->ID_Persona();
-                $idu = DB::table('users')->select('id')->max('id');
-                if ($persona->Guardar_Persona($request, $idPersona, $idu) == "Guardado") {
-                    return redirect()->route('usuarios.general')->with('fine', 'Usuario guardado exitosamente.');
-                }else{
-                    return back()->with('fail',' Error al guardar la información del usuario.');
-                }
-
-            }else {
-                return back()->with("fail", "Fallo  general al guardar la información del usuario.");
+            $idpersona = $persona->id_persona();
+            // $idu = db::table('users')->select('id')->max('id');
+            if ($persona->guardar_persona($request, $idpersona, $request->id_user) == "Guardado") {
+                $user->Actualizar_Usuario($request->id_user, $request->username, $request->estado, $request->email, $request->cargo);
+                return redirect()->route('usuarios.general')->with('fine', 'Usuario guardado exitosamente.');
+            }else{
+                return back()->with('fail',' error al guardar la información del usuario.');
             }
-
         }
+
     }
 
 
@@ -104,7 +122,7 @@ class UsuarioController extends Controller
             // dd($request);
             if($persona->Actualizar_Persona($request, $idp) == "Actualizado"){
 
-                if ($usuario->Actualizar_Usuario($request->id_user, $request->nombreuser, $request->email) == "Actualizado") {
+                if ($usuario->Actualizar_Usuario($request->id_user, $request->nombreuser, $request->estado, $request->email, $request->cargo) == "Actualizado") {
                     return redirect()->route('usuarios.general')->with('fine','Usuario actualizado correctamente.');
                 }else{
                     return back()->with('fail','Ha ocurrido un error al actualizar los datos del usuario.');

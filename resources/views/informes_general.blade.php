@@ -43,14 +43,14 @@
 
         <div class="col-sm-2 bg-white ms-4">
            <div class="pe-0 card-body">
-              <a class="ps-0 pe-0 nav-link" href="{{ route('pedidos.general') }}"><h5 class="card-title">Informe Productos</h5></a>
+              <a class="ps-0 pe-0 nav-link" href="{{ route('informes.productos') }}"><h5 class="card-title">Informe Productos</h5></a>
               <div class="d-flex align-items-center">
                 <div  style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                  <a href="{{ route('pedidos.general') }}"><i class="bi bi-clipboard-check" style="color: #2eca6a;"></i></a>
+                  <a href="{{ route('informes.productos') }}"><i class="bi bi-clipboard-check" style="color: #2eca6a;"></i></a>
                 </div>
                 <div class="ps-2">
                   <h6>145</h6>
-                  <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                  <span class="text-success small pt-1 fw-bold">12</span> <span class="text-muted small pt-2 ps-1">increase</span>
                 </div>
               </div>
            </div>

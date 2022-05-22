@@ -25,8 +25,8 @@
                 </div>
 
                 <form method="POST" action="{{ route('register') }}">
-                @csrf
-                <div class="form-outline mb-3">
+                    @csrf
+                    <div class="form-outline mb-3">
                         <label class="form-label" for="name" >* Nombre y Apellido</label>
                         <!-- <input type="email" id="form1" class="form-control" placeholder="Nombres" autofocus/> -->
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Nombres" autofocus>

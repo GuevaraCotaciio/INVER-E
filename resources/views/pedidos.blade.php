@@ -213,7 +213,6 @@
                                 <th scope="col" class="border border-white table-primary">Ciudad</th>
                                 <th scope="col" class="border border-white table-primary">Dirección</th>
                                 <th scope="col" class="border border-white table-primary">E-mail</th>
-                                <th scope="col" class="border border-white table-primary" style="width: 250px;">Acciones</th>
                               </tr>
                         </thead>
 
@@ -235,18 +234,7 @@
                                   <td class="border-top">{{$clientes->ciudad }}</td>
                                   <td class="border-top">{{$clientes->direccion }}</td>
                                   <td class="border-top">{{$clientes->email }}</td>
-                                  <td class="border-top">
-                                    <div class="row col-12">
-                                      <div class="col-3"><a href="{{ route('clientes.show',$clientes->id) }}" type="submit" class="btn btn-primary btn-sm">&nbsp;Ver</a></div>
-                                      <div class="col-3 m-0 p-0"><a href="{{ route('clientes.update',$clientes->id) }}" class="btn btn-warning btn-sm">Editar</a></div>
-                                      <div class="col-3 m-0 p-0">
-                                        <form class="m-0 p-0"  action="{{ route('clientes.destroy',$clientes->id_cliente) }}" method="post">
-                                          @csrf @method('DELETE')
-                                          <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </td>
+
                                 </tr>
                               @endforeach
                             @endif
