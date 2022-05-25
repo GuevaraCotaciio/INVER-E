@@ -41,11 +41,11 @@
                 <!-- <input type="email" id="form1" class="form-control" placeholder="Nombres" autofocus/> -->
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Nombres" autofocus>
 
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-outline mb-3">
@@ -53,11 +53,11 @@
                 <!-- <input type="email" id="form2" class="form-control" placeholder="Correo Electronico"/> -->
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Correo Electronico">
 
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-outline mb-3">
@@ -65,16 +65,16 @@
                 <!-- <input type="password" id="form3" class="form-control" placeholder="********" /> -->
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="********">
 
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="row  text-center ">
                 <div class="">
-                     <button class="btn btn-primary" type="submit">Guardar</button>
+                     <button class="btn btn-success" type="submit">Siguiente</button>
                 </div>
             </div>
         </form>

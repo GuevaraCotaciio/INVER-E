@@ -24,8 +24,8 @@ class ConfigController extends Controller
         ->orderBy('id', 'asc')->paginate(1);
         //dd($datosempresa);
 
-        $persona = new user();
-        $datos_user = $persona->Buscar_User_ID($iduser);
+        $usuario = new user();
+        $datos_user = $usuario->Buscar_User_ID($iduser);
 
         // $datos_user=DB::table('persona')
         // ->select('id', 'nombre', 'tipo_empresa', 'descripcion', 'ciudad', 'direccion', 'telefono', 'email', 'facebook', 'instagram', 'whatsapp', 'imagen')

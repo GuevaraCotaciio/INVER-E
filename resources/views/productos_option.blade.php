@@ -15,7 +15,7 @@
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active"><a href="{{ route('productos.general') }}">Productos</a></li>
-                    <li class="breadcrumb-item active">ver</li>
+                    <li class="breadcrumb-item active">Lista productos</li>
                   </ol>
                 </nav>
             </div>
@@ -27,9 +27,10 @@
                         @foreach ($productosproducidos as $productos )
                             <div class="card ms-4 border border-secunday mt-3" style="border: 0px;  width: 190px;">
 
+
                                 <div class="row ps-3">
-                                    <div class="card-head pt-1 m-0 " style="width: 160px; height: 90px;">
-                                        <img src="{{asset('images/comino.png')}}" class="d-block w-100" alt="via1">
+                                    <div class="card-head pt-1 m-0 p-0" style="width: 160px; height: 100px;">
+                                        <img src="{{ Storage::url($productos->imagen) }}" class="ms-4" width="110px" height="95px">
                                     </div>
                                 </div>
                                 <div class="row text-left">

@@ -1,5 +1,5 @@
 <head>
-    <title>Inver-E / Usuarios-Agregar</title>
+    <title>Inver-E / Usuarios-datos</title>
 </head>
 
 <!-- ======= Header ======= -->
@@ -16,7 +16,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
           <li class="breadcrumb-item"><a href="{{ route('usuarios.general') }}">Usuarios</a></li>
-          <li class="breadcrumb-item"><a disabled href="{{ route('usuarios.general') }}">Registro</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('usuarios.general') }}">Registro</a></li>
           <li class="breadcrumb-item active">Datos</li>
         </ol>
       </nav>
@@ -25,30 +25,29 @@
     <div class="card ms-2 me-3">
       <div class="card-body m-4">
 
-
-
         @if(isset($datosuser) == TRUE)
 
         <h4 class="card-title mb-5">Completa los siguientes datos del usuario</h4>
 
-
         <!-- ======== Formulario General Persona ======== -->
         <form method="POST" action="{{ route('usuarios.save') }}"  enctype="multipart/form-data">
             @csrf
+
         @foreach ($datosuser as $user )
-            <input type="radio" name="tipo" value="Persona" checked hidden >
-            <input type="radio" name="estado" value="Activo" checked hidden >
-            <input type="radio" name="tipopersona" value="Usuario" checked hidden >
-            <input type="radio" name="id_user" value="{{ $user->id }}" checked hidden >
-            <input type="email" name="email" value="{{ $user->email }}" required hidden>
-            <input type="email" name="username" value="{{ $user->name }}" required hidden>
+
+            <input type="radio" name="tipo" value="Persona" checked hidden>
+            <input type="radio" name="estado" value="Activo" checked hidden>
+            <input type="radio" name="tipopersona" value="Usuario" checked hidden>
+            <input type="radio" name="id_user" value="{{ $user->id }}" checked hidden>
+            <input type="email" name="email" value="{{ $user->email }}" hidden>
+            <input type="text" name="username" value="{{ $user->name }}" hidden>
 
             <div class="row col-lg-12 pe-0">
 
                 <div class="col-lg-2">  <!-- foto del clinte -->
 
                     <div class="card p-0 border-0">
-                        <p class="small">{{ $user->name }}</p>
+                        <p class="small m-0 p-0">{{ $user->name }}</p>
                         <img class="border-0" src="/public/default.png" alt="avatar" style="height: 130px;">
                     </div>
 

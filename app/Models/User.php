@@ -91,8 +91,6 @@ class User extends Authenticatable
                 ->where('users.id', $Iduser)->paginate(1);
                 // dd($listusuario);
                 return $user;
-
-
         }
     }
 

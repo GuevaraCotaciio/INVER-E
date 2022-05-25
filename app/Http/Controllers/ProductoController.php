@@ -110,7 +110,7 @@ class ProductoController extends Controller
     public function productos_list() //Vista y form de visualizar datos
     {
         $productosproducidos=DB::table('producto')
-        ->select('id', 'nombre', 'descripcion', 'estado_producto', 'calibre_producto', 'clasificacion_producto', 'cantidad', 'fecha_vencimiento', 'peso_unitario', 'valor_venta', 'valor_compra')
+        ->select('id', 'nombre', 'descripcion', 'estado_producto', 'calibre_producto', 'clasificacion_producto', 'cantidad', 'fecha_vencimiento', 'peso_unitario', 'valor_venta', 'valor_compra', 'imagen')
         ->where('estado_producto', 'Disponible')
         ->orderBy('id', 'asc')->paginate(10);
 

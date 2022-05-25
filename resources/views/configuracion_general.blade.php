@@ -42,18 +42,21 @@
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#editar_perfil"><i class="bi bi-file-earmark-person"></i> Editar Perfil</button>
                       </li>
 
-
-
                       <li class="nav-item">
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Seccion_informacion"><i class="bi bi-question-circle"></i> Información</button>
                       </li>
+
+                      <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Seccion_otros"><i class="bi bi-gear"></i> Otros</button>
+                      </li>
+
                     </ul>
 
                     <!--  Contenido  -->
                     <div class="tab-content pt-2">
 
                         <!-- perfil de empresa -->
-                        <div class="tab-pane fade editar_empresa active show pt-3 " id="editar_empresa">
+                        <div class="tab-pane fade active show pt-3 " id="editar_empresa">
 
                             @if (count($datosempresa)<= 0 )
 
@@ -292,10 +295,12 @@
                         <div class="tab-pane fade pt-3" id="editar_perfil">
 
                             @foreach ($datos_user as $usuario )
-                            <form>
-
+                            <form action="{{ route('usuarios.edit', $usuario->id_persona) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row col-12 mb-3">
                                     <div class="col-md-8 col-lg-9">
+
+                                        {{-- @dd($datos_user); --}}
 
                                         <h5 class="card-title"></h5>
 
@@ -323,7 +328,8 @@
 
                                             <div class="col-lg-4 ms-5 ps-3">
                                                 <h6 class="card-title">Información de usuario.</h6>
-                                                <p class=" fst-italic">Cargo:  <span class="ms-4">{{ Auth::user()->cargo }}</span></p>
+                                                <p class=" fst-italic">Cargo:  <span class="ms-4">{{ Auth::user()->cargo  }}</span></p>
+                                                <input type="text" hidden name="rol" value="UserPersonal">
                                                 <p class=" fst-italic">Genero: <span class="ms-3">{{ $usuario->genero }}</span></p>
                                                 <p class=" fst-italic">Edad:   <span class="ms-4">{{ $usuario->fecha_nacimiento }}</span></p>
                                             </div>
@@ -416,7 +422,7 @@
                         </div>
 
                         <!-- informacion de proyecto -->
-                        <div class="tab-pane fade Seccion_informacion" id="Seccion_informacion">
+                        <div class="tab-pane fade " id="Seccion_informacion">
 
                             <h5 class="card-title mt-4">Información del sistema INVER-E</h5>
                             <p class="small fst-italic">Es un aplicacion que ayuda a controlar los productos que comercializa o produce su empresa para su modelo de negocio,  cuenta con 5 bases principales para llevar un control de los productos.</p>
@@ -453,6 +459,58 @@
 
 
                         </div>
+
+                        <!-- otros -->
+                        <div class="tab-pane fade " id="Seccion_otros">
+
+                            <h5 class="card-title mt-4">Cambiar Color</h5>
+                            <div class="row col-12 ps-3">
+
+                                <div class="card col-2 p-0 me-2" style="background-color: #def2df">
+                                    <div class="m-0 pt-1 pb-1" style="background-color: #96f19b"> Inver-E</div> {{--  verde --}}
+                                    <a class="btn border m-5 p-0">Verde</a>
+                                </div>
+
+                                <div class="card col-2 p-0 me-2" style="background-color: #deebf2">
+                                    <div class="m-0 pt-1 pb-1" style="background-color: #96ddf1"> Inver-E</div> {{--  azul  --}}
+                                    <a class="btn border m-5 p-0">Azul</a>
+                                </div>
+
+                                <div class="card col-2 p-0 me-2" style="background-color: #ffeded">
+                                    <div class="m-0 pt-1 pb-1" style="background-color: #f19696"> Inver-E</div> {{--  rojo --}}
+                                    <a class="btn border m-5 p-0">Rojo</a>
+                                </div>
+
+                                <div class="card col-2 p-0" style="background-color: #e8edf4">
+                                    <div class=" bg-dark m-0 pt-1 pb-1"> Inver-E</div>
+                                    <a class="btn border m-5 p-0">Default</a>
+                                </div>
+
+                            </div>
+
+
+                            <h5 class="card-title mt-3">Cambiar tipo de fuente</h5>
+                            <div class="row col-12">
+                                <div class="row mb-3">
+                                    <div class="col-sm-10 pe-0">
+                                      <select class="form-select form-select-lg" name="genero">
+                                        <option selected="">Selecciona el genero</option>
+                                        <option value="Helvetica Neue">Helvetica Neue</option>
+                                        <option value="Helvetica">Helvetica</option>
+                                        <option value="sans-serif">sans-serif</option>
+                                        <option value="Arial">Arial</option>
+                                        <option value="Quicksand">Quicksand</option>
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-2 ">
+                                <button type="submit" class="btn btn-success ">Guardar</button>
+                            </div>
+
+                        </div>
+
 
 
                     </div>

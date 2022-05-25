@@ -37,7 +37,7 @@
 
             <div class="row col-4  p-0 m-0 ">
                 <div class="card">
-                    <img src="{{ Storage::url($usuario->avatar) }}" alt="" width="150px">
+                    <img src="{{ Storage::url($usuario->avatar) }}" alt="" width="300px">
                 </div>
 
             </div>

@@ -26,12 +26,14 @@
         <h4 class="card-title mb-5">Actualizar Usuario</h4>
 
 
-
         <!-- ======== Formulario General ======== -->
         @foreach ($datosusuario as $usuario )
         <form action="{{ route('usuarios.edit', $usuario->id_persona ) }}" method="POST" enctype="multipart/form-data">
           @csrf
           <input type="number" hidden name="id_user"  value="{{ $usuario->id_user }}">
+          <input type="text" hidden name="rol" value="UsuariosGeneral">
+          <input type="text" hidden name="estado" value="{{ $usuario->estado }}">
+          <input type="text" hidden name="cargo" value="{{ $usuario->cargo }}">
           <div class=" row col-lg-12 mb-4">
 
             <div class="col-lg-2">  <!-- foto del clinte -->

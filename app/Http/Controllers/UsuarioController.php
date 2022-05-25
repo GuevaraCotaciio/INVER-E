@@ -75,8 +75,6 @@ class UsuarioController extends Controller
 
     public function usuarios_informacion(Request $request) //form guardar datos
     {
-        dd($request);
-
         $user = new User();
         $persona = new Persona();
         if($persona->Valida_Persona($request->document) == 'Usuario ya existe'){
@@ -92,9 +90,7 @@ class UsuarioController extends Controller
                 return back()->with('fail',' error al guardar la información del usuario.');
             }
         }
-
     }
-
 
 
     public function usuarios_update($idusuario) //formulario de actualizar datos
@@ -106,34 +102,49 @@ class UsuarioController extends Controller
             return view('usuarios_update', compact('datosusuario'));
 
         } catch (\Throwable $e) {
-
             throw $e;
             echo "error";
-
         }
-
     }
+
     public function usuarios_edit(Request $request, $idp) //ruta de actualizar datos
     {
         try {
-
             $persona = new Persona();
             $usuario = new User();
-            // dd($request);
-            if($persona->Actualizar_Persona($request, $idp) == "Actualizado"){
 
-                if ($usuario->Actualizar_Usuario($request->id_user, $request->nombreuser, $request->estado, $request->email, $request->cargo) == "Actualizado") {
-                    return redirect()->route('usuarios.general')->with('fine','Usuario actualizado correctamente.');
+            if ($request->rol == "UserPersonal") {
+
+                 // dd($request);f
+                 if($persona->Actualizar_Persona($request, $idp) == "Actualizado"){
+
+                    if ($usuario->Actualizar_Usuario($request->id_user, $request->nombreuser, $request->estado, $request->email, $request->cargo) == "Actualizado") {
+                        return redirect()->route('usuarios.general')->with('fine','Usuario actualizado correctamente.');
+                    }else{
+                        return back()->with('fail','Ha ocurrido un error al actualizar los datos del usuario.');
+                    }
                 }else{
-                    return back()->with('fail','Ha ocurrido un error al actualizar los datos del usuario.');
+                    return back()->with('fail','Ha ocurrido un error al guardar la información del usuario.');
                 }
-            }else{
-                return back()->with('fail','Ha ocurrido un error al guardar la información del usuario.');
+
+            }elseif ($request->rol == "UsuariosGeneral") {
+
+                // dd($request);
+                if($persona->Actualizar_Persona($request, $idp) == "Actualizado"){
+
+                    if ($usuario->Actualizar_Usuario($request->id_user, $request->nombreuser, $request->estado, $request->email, $request->cargo) == "Actualizado") {
+                        return redirect()->route('usuarios.general')->with('fine','Usuario actualizado correctamente.');
+                    }else{
+                        return back()->with('fail','Ha ocurrido un error al actualizar los datos del usuario.');
+                    }
+                }else{
+                    return back()->with('fail','Ha ocurrido un error al guardar la información del usuario.');
+                }
+
             }
 
 
         } catch (\Exception $e) {
-
             DB::rollBack();  //si la transaccion anterior es nula
             throw $e;
             echo "error";

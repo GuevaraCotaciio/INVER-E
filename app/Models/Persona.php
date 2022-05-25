@@ -136,7 +136,7 @@ class Persona extends Model
 
                 $listusuario=DB::table('users')
                 ->join('persona','persona.id_usuario','=','users.id')
-                ->select('users.id as id_user','persona.id as id_persona', 'persona.nombre', 'persona.apellido', 'users.name as nombreuser', 'persona.documento', 'persona.tipo_documento', 'persona.genero', 'persona.fecha_nacimiento', 'persona.telefono', 'persona.ciudad', 'persona.direccion', 'persona.email', 'persona.avatar', 'persona.created_at as creado', 'users.estado')
+                ->select('users.id as id_user','persona.id as id_persona', 'persona.nombre', 'persona.apellido', 'users.name as nombreuser', 'persona.documento', 'persona.tipo_documento', 'persona.genero', 'persona.fecha_nacimiento', 'persona.telefono', 'persona.ciudad', 'persona.direccion', 'persona.email', 'persona.avatar', 'persona.created_at as creado', 'users.estado', 'users.cargo')
                 ->where('persona.id', $IdPersona)
                 ->Where('persona.tipo_persona', $TipoPersona)
                 ->where('users.estado', 'Activo')->paginate(1);
