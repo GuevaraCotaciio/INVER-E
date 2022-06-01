@@ -116,6 +116,16 @@ class Producto extends Model
         }
     }
 
+    public function Buscar_Productos(){
+
+            $datosproducto=DB::table('proveedor')
+            ->join('producto','producto.id_proveedor','=','proveedor.id')
+            ->select('producto.id as idproducto', 'producto.nombre as nombre', 'proveedor.nombre as nombreproveedor', 'descripcion', 'tipo_producto', 'estado_producto', 'calibre_producto', 'clasificacion_producto', 'cantidad', 'fecha_vencimiento', 'peso_unitario', 'unidad_medida', 'valor_venta', 'valor_compra', 'imagen')
+            ->where('estado_producto', 'Disponible')->get();
+            //  dd($datosproducto);
+            return $datosproducto;
+    }
+
 
 
 

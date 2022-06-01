@@ -30,6 +30,10 @@ Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'pedidos_i
 Route::get('/pedidos/buscar-cliente', [App\Http\Controllers\ClienteController::class, 'clientes_buscar'])->name('pedido_cliente.buscar');
 Route::post('/pedidos/nuevo-pedido', [App\Http\Controllers\ClienteController::class, 'clientes_buscar_pedidos'])->name('pedido_cliente_buscar_datos');
 
+//Rutas de acciones
+Route::post('/pedidos-save', [App\Http\Controllers\PedidoController::class, 'pedidos_save'])->name('pedidos.save'); //Guardar
+Route::post('/productos-edit/{producto}', [App\Http\Controllers\PedidoController::class, 'pedidos_edit'])->name('productos.edit'); //Actualizar
+Route::delete('/productos-delete/{producto}', [App\Http\Controllers\PedidoController::class, 'pedidos_destroy'])->name('productos.destroy'); //Eliminar
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

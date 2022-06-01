@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Persona;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -121,13 +122,15 @@ class ClienteController extends Controller
     {
         $cliente = new Cliente();
         $persona = new Persona();
+        $productos = new Producto();
 
         $idcliente = substr($request->NombreCliente, 0, 1);
-
+        $listaitem = [];
         $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);    // lista de nombres de los clientes
         $datoscliente = $cliente->Buscar_Cliente_pedidos($idcliente);           // datos del cliente seleccionado
         $listClientes = $persona->Lista_Personas_General("Cliente");            // lista de clientes activos
-        return view('pedidos', compact('nombreclientes', 'datoscliente', 'listClientes' ));
+        $listaProdctos = $productos->Buscar_Productos();
+        return view('pedidos', compact('nombreclientes', 'datoscliente', 'listClientes', 'listaProdctos', 'listaitem' ));
 
     }
 
