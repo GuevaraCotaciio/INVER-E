@@ -93,7 +93,7 @@
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-2 mb-3 p-0">
-                                <input type="text" class="form-control bg-white border-0" id="floatingInput" name="id_factura" value="234567" readonly="readonly">
+                                <input type="text" class="form-control bg-white border-0" id="floatingInput" name="id_factura" value="{{$idfactura}}" readonly="readonly">
                                 <label for="floatingInput ">ID Factura</label>
                             </div>
 
@@ -104,7 +104,7 @@
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-5 mt-2 mb-3 p-0 pe-2">
-                                <input class="form-control border-0" type="datetime-local" id="fecha" />
+                                <input class="form-control border-0" type="datetime-local" id="fecha" name="FechaEntrega" />
                                 <label for="fecha">Fecha y hora de entrega</label>
                             </div>
 
@@ -185,8 +185,8 @@
                                         </tr>
 
 
-
                                          @else   {{--  condicion cuando recien entra a realizar un pedido --}}
+
 
                                         <tr id="fila0">
 
@@ -245,12 +245,86 @@
 
 
 
-        <!-- ======= Contenedor items ======= -->
+        <!-- ======= Contenedor tabla de infromación ======= -->
         <div class="col-lg-12 pt-2">
-            <div class="row col-12 ps-4">
+
+            <div class="card m-3 ps-5 pe-3 pt-5 border border-2">
+
+                @if (session()->has('fine'))
+                <div class="alert alert-success border-2 border-success">{{ session('fine')}}</div>
+                @elseif (session()->has('fail'))
+                <div class="alert alert-danger">{{ session('fail')}}</div>
+                @endif
+
+                <!-- seccion tabla de pedidos -->
+                <div class="col-12 pe-5 pb-3">
+                    <div class="card recent-sales overflow-auto border-0">
+
+                      <div class="filter">
+                        <a class="icon " href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                          <li class="dropdown-header text-start">
+                            <h6>Filter</h6>
+                          </li>
+
+                          <li><a class="dropdown-item" href="#">Today</a></li>
+                          <li><a class="dropdown-item" href="#">This Month</a></li>
+                          <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                      </div>
+
+                      <div class="card-body">
+                        <h5 class="card-title">Lista de clientes</h5>
+
+                        <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col" class="border border-white table-primary">ID</th>
+                                  <th scope="col" class="border border-white table-primary">Nombre</th>
+                                  <th scope="col" class="border border-white table-primary">Documento</th>
+                                  <th scope="col" class="border border-white table-primary">Genero</th>
+                                  <th scope="col" class="border border-white table-primary">Edad</th>
+                                  <th scope="col" class="border border-white table-primary">Teléfono</th>
+                                  <th scope="col" class="border border-white table-primary">Ciudad</th>
+                                  <th scope="col" class="border border-white table-primary">Dirección</th>
+                                  <th scope="col" class="border border-white table-primary">E-mail</th>
+                                </tr>
+                          </thead>
+
+                          <tbody>
+                              @if(count($listClientes)<=0)
+                                <tr>
+                                  <td colspan="10" class="text-danger"> No hay registros para el nombre solicitado</td>
+                                </tr>
+                              @else
+                                @foreach ($listClientes as $clientes)
+                                  <tr>
+                                    <td class="border-top">{{$clientes->id_cliente }}</td>
+                                    <td class="border-top">{{$clientes->nombre }} {{$clientes->apellido }}</td>
+                                    <td class="border-top">{{$clientes->documento }}</td>
+                                    <td class="border-top">{{$clientes->genero }}</td>
+                                    {{-- <td class="border-top">{{ $edad =floor(date('Y-m-d')/ ($clientes->fecha_nacimiento) ) }}</td> --}}
+                                    <td class="border-top">{{$clientes->fecha_nacimiento }}</td>
+                                    <td class="border-top">{{$clientes->telefono }}</td>
+                                    <td class="border-top">{{$clientes->ciudad }}</td>
+                                    <td class="border-top">{{$clientes->direccion }}</td>
+                                    <td class="border-top">{{$clientes->email }}</td>
+
+                                  </tr>
+                                @endforeach
+                              @endif
+                          </tbody>
+                        </table>
+
+                      </div>
+
+                    </div>
+                </div>
+
 
                 <!-- seccion tabla de clientes -->
                 <div class="col-12 pe-5 pb-3">
+                    <hr>
                   <div class="card recent-sales overflow-auto border-0">
 
                     <div class="filter">
@@ -312,160 +386,12 @@
                     </div>
 
                   </div>
-                </div><!-- End Recent Sales -->
-
-
-
-
-
-
-                <!-- Separador linea de productos  -->
-                {{-- <div class="card-body">
-                  <h5 class="card-title pt-3 ps-2">Productos proximos a vencer </h5>
-                    <div id="reportsChart"></div>
-                </div> --}}
-
-
-                {{-- <!-- Sales Card -->
-                <div class="col-lg-3 col-md-4">
-
-                  <div class="card" style="width: 18rem; border: 0px;">
-
-                    <div id="carouselControls1" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active"style="width: 13rem;">
-                          <img src="{{asset('images/facebook.png')}}" class="d-block w-100 ps-5 pt-2" alt="via1">
-                        </div>
-                        <div class="carousel-item " style="width: 13rem;">
-                          <img src="{{asset('images/instagram.png')}}" class="d-block w-100 ps-5 pt-2" alt="via2">
-                        </div>
-                        <div class="carousel-item" style="width: 13rem;">
-                          <img src="{{asset('images/whatsapp.png')}}" class="d-block w-100 ps-5 pt-2" alt="via3">
-                        </div>
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls1" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselControls1" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Redes Sociales1</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Revisar Producto</a>
-                    </div>
-                  </div>
-                </div><!-- End Sales Card -->
-
-                <!-- Revenue Card -->
-                <div class="col-lg-3 col-md-4">
-
-                  <div class="card" style="width: 18rem;  border: 0px;">
-
-                    <div id="carouselControls2" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active"style="width: 13rem;">
-                          <img src="{{asset('images/facebook.png')}}" class="d-block w-100 ps-5 pt-2" alt="via1">
-                        </div>
-                        <div class="carousel-item " style="width: 13rem;">
-                          <img src="{{asset('images/instagram.png')}}" class="d-block w-100 ps-5 pt-2" alt="via2">
-                        </div>
-                        <div class="carousel-item" style="width: 13rem;">
-                          <img src="{{asset('images/whatsapp.png')}}" class="d-block w-100 ps-5 pt-2" alt="via3">
-                        </div>
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls2" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselControls2" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Redes Sociales2</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Revisar Producto</a>
-                    </div>
-                  </div>
-                </div><!-- End Revenue Card -->
-
-                <!-- Customers Card -->
-                <div class="col-lg-3 col-md-4">
-
-                  <div class="card" style="width: 18rem;  border: 0px;">
-
-                    <div id="carouselControls3" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active"style="width: 13rem;">
-                          <img src="{{asset('images/facebook.png')}}" class="d-block w-100 ps-5 pt-2" alt="via1">
-                        </div>
-                        <div class="carousel-item " style="width: 13rem;">
-                          <img src="{{asset('images/instagram.png')}}" class="d-block w-100 ps-5 pt-2" alt="via2">
-                        </div>
-                        <div class="carousel-item" style="width: 13rem;">
-                          <img src="{{asset('images/whatsapp.png')}}" class="d-block w-100 ps-5 pt-2" alt="via3">
-                        </div>
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls3" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselControls3" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Redes Sociales3</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Revisar Producto</a>
-                    </div>
-                  </div>
-                </div><!-- End Customers Card -->
-
-                <!-- new Card -->
-                <div class="col-lg-3 col-md-4">
-
-                  <div class="card" style="width: 18rem;  border: 0px;">
-
-                    <div id="carouselControls4" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active"style="width: 13rem;">
-                          <img src="{{asset('images/facebook.png')}}" class="d-block w-100 ps-5 pt-2" alt="via1">
-                        </div>
-                        <div class="carousel-item " style="width: 13rem;">
-                          <img src="{{asset('images/instagram.png')}}" class="d-block w-100 ps-5 pt-2" alt="via2">
-                        </div>
-                        <div class="carousel-item" style="width: 13rem;">
-                          <img src="{{asset('images/whatsapp.png')}}" class="d-block w-100 ps-5 pt-2" alt="via3">
-                        </div>
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls4" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselControls4" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Redes Sociales4</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Revisar Producto</a>
-                    </div>
-                  </div>
-                </div><!-- End new Card --> --}}
-
+                </div>
 
             </div>
-        </div><!-- End contenedor items -->
 
+
+        </div><!-- End contenedor items -->
 
     </section>
   </main><!-- End Conten -->

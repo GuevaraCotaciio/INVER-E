@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\factura;
 use App\Models\Pedido_temp;
 use App\Models\Pedidos;
 use App\Models\Persona;
@@ -21,11 +22,14 @@ class PedidoController extends Controller
     {
             $cliente = new Cliente();
             $persona = new Persona();
-            $datoscliente = [];
-            $listaitem = [];             // lista de items creados
+            $factura = new factura();
+
+            $datoscliente = [];                                                         //
+            $listaitem = [];                                                            // lista de items creados
             $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);        // lista de nombres de los clientes
             $listClientes = $persona->Lista_Personas_General("Cliente");                // lista de clientes activos
-            return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listaitem'));
+            $idfactura = $factura->ID_Factura();                                        // ID DE LA FACTURA
+            return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listaitem', 'idfactura'));
 
     }
 
@@ -66,44 +70,70 @@ class PedidoController extends Controller
                     $cliente = new Cliente();
                     $persona = new Persona();
                     $productos = new Producto();
+                    $factura = new factura();
 
                     $listaitem = $pedido_temp->Buscar_ItemsTemp();                               // lista de items creados
-                    // dd($listaitem);
                     $datoscliente = $cliente->Buscar_Cliente_pedidos($request->idUsuario);       //lista de cliente seleccionado
                     $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);         // lista de nombres de los clientes
                     $listClientes = $persona->Lista_Personas_General("Cliente");                 // lista de clientes activos
-                    $listaProdctos = $productos->Buscar_Productos();
+                    $idfactura = $factura->ID_Factura();                                         // ID DE LA FACTURA
+                    $listaProdctos = $productos->Buscar_Productos();                             // Lista de buscar productos
                     echo "nuevo producto";
-                    return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listaitem', 'listaProdctos'));
+                    return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listaitem', 'listaProdctos', 'idfactura'));
 
                 }else{
 
                 }
 
-            }else if ($request->GuardarFactura == "crearfactura") {   // guarda todos los fatos y crea la factura
+            }else if ($request->GuardarFactura == "crearfactura") {         // guarda todos los datos y crea la factura
 
-                echo "Factura guardada";
+                $factura = new factura();
+                if ($factura->Guardar_factura($request) == "Guardado") {    // guarda todos los datos y crea la factura
+
+
+                    $datosTemp=DB::table('facturatemp')                     // consulta datos de la tabla facturatemp
+                    ->select('id', 'numero_factura', 'id_cliente', 'id_producto', 'vendedor', 'cantidad', 'valor')->get();
+                    // dd($datosTemp);
+
+                    $datosFac = DB::table('factura')                         // consulta datos de la tabla factura
+                    ->select('id', 'id_cliente', 'vendedor', 'fecha_entrega')->get();
+
+                    if (strlen($request->nombre_producto) > 0 &&  strlen($request->cantidad_producto) > 0 ) {      // validación si el ultimo campo tiene datos o no
+
+                        $pedidos = new Pedidos();                               // guarda todos los datos y crea el pedido
+
+                        foreach ($datosTemp as $DatosFactura) {
+                            $pedidos->Guardar_pedido($DatosFactura->id_producto, $DatosFactura->numero_factura, $DatosFactura->cantidad);
+                        }
+
+                        $IDPRODUCT = intval(preg_replace('/[^0-9]+/', '', $request->nombre_producto), 10);  //saco el numero de la cadena de texto
+                        if ($pedidos->Guardar_pedido($IDPRODUCT, $request->id_factura, $request->cantidad_producto) == "Guardado") {
+                            return redirect()->route('pedidos.general')->with('fine','Producto guardado exitosamente.');
+                        }else {
+                            echo "fallo";
+                        }
+
+                    }else{
+
+                        $pedidos = new Pedidos();                               // guarda todos los datos y crea el pedido
+                        foreach ($datosTemp as $DatosFactura) {
+                            $pedidos->Guardar_pedido($DatosFactura->id_producto, $DatosFactura->numero_factura, $DatosFactura->cantidad);
+                        }
+                        return redirect()->route('pedidos.general')->with('fine','Producto guardado exitosamente.');
+
+                    }
+
+                }else{
+                    return back()->with('fail','Error  al intentar guardar los datos de la factura.');
+                }
 
             }
-
-
-
-            // $pedido = new Pedidos();
-            // $idPedido = $pedido->ID_Producto();
-            // $estadop = "Disponible";
-            // if( $pedido->Guardar_Producto($request, $idPedido, $estadop) == "Guardado"){
-            //     return redirect()->route('productos.general')->with('fine','Producto guardado exitosamente.');
-            // }else{
-            //     return back()->with('fail',' Fallo al guardar el producto.');
-            // }
 
         } catch (\Exception $e) {
             throw $e;
             return back()->with('fail','Fallo  general al guardar la información del cliente.  |  Detalles: ', $e);
         }
-
     }
-
 
 
     public function pedidos_edit(Request $request){

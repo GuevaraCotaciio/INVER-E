@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\factura;
 use App\Models\Persona;
 use App\Models\Producto;
 use Illuminate\Http\Request;
@@ -123,14 +124,16 @@ class ClienteController extends Controller
         $cliente = new Cliente();
         $persona = new Persona();
         $productos = new Producto();
+        $factura = new factura();
 
         $idcliente = substr($request->NombreCliente, 0, 1);
         $listaitem = [];
         $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);    // lista de nombres de los clientes
         $datoscliente = $cliente->Buscar_Cliente_pedidos($idcliente);           // datos del cliente seleccionado
         $listClientes = $persona->Lista_Personas_General("Cliente");            // lista de clientes activos
+        $idfactura = $factura->ID_Factura();                                        // ID DE LA FACTURA
         $listaProdctos = $productos->Buscar_Productos();
-        return view('pedidos', compact('nombreclientes', 'datoscliente', 'listClientes', 'listaProdctos', 'listaitem' ));
+        return view('pedidos', compact('nombreclientes', 'datoscliente', 'listClientes', 'listaProdctos', 'listaitem', 'idfactura'));
 
     }
 

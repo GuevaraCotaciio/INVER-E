@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 class Pedidos extends Model
 {
     use HasFactory;
-    protected $table ="factura";
+    protected $table ="pedido";
 
 
 
-    function ID_Producto(){
+    function ID_Pedido(){
         try {
             $IDPedido = DB::table('pedido')->select('id')->max('id');
             return $IDPedido + 1;
@@ -23,37 +23,23 @@ class Pedidos extends Model
         }
     }
 
-    public function Guardar_pedido($datos, $idP, $estado){  //guardo los datos
+    public function Guardar_pedido($idProducto, $idFactura, $cantidad){  //guardo los datos
         try{
-            $producto = new Pedidos();
-            $producto->id                      = $idP;
-            $producto->id_proveedor            = $datos->IDproveedor;
-            $producto->nombre                  = $datos->namep;
-            $producto->descripcion             = $datos->Description;
-            $producto->tipo_producto           = $datos->tipoProducto;
-            $producto->calibre_producto        = $datos->calibre;
-            $producto->clasificacion_producto  = $datos->tipoClase;
-            $producto->cantidad                = $datos->cantidad;
-            $producto->fecha_vencimiento       = $datos->fechaVencimiento;
-            $producto->estado_producto         = $estado;
-            $producto->peso_unitario           = $datos->pesoUnitario;
-            $producto->unidad_medida           = $datos->unidadmedida;
-            $producto->valor_venta             = $datos->precioventa;
-            $producto->valor_compra            = $datos->preciocompra;
-            $producto->imagen                  = $datos->imagen_producto;
-            if ($datos->hasFile('imagen_producto')) {
-                $producto->imagen     = $datos->file('imagen_producto')->store('public');
-            }else{
-                $producto->imagen     ="public/default.png";
-            }
-            $producto->save();
+
+            $pedido = new Pedidos();                               // guarda todos los datos y crea el pedido
+            $pedido->id             = $pedido->ID_Pedido();
+            $pedido->id_factura     = $idFactura;
+            $pedido->id_producto    = $idProducto;
+            $pedido->cantidad       = $cantidad;
+            $pedido->save();
             return "Guardado";
 
         } catch (\Exception $e) {
             throw $e;
-            return back()->with('fail','Ha ocurrido un error al guardar la información del producto. | Detalles: ', $e);
+            return back()->with('fail','Ha ocurrido un error al guardar la información del pedido. | Detalles: ', $e);
         }
     }
+
 
     public function Actualizar_Pedido($datos, $idP, $estado){   // actualizo los datos
         try{
