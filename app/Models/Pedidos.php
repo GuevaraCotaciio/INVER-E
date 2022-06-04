@@ -90,6 +90,25 @@ class Pedidos extends Model
     }
 
 
+    public function Lista_Pedidos_General(){
+
+            $datospedidos=DB::table('factura')
+            ->join('pedido','pedido.id_factura','=','factura.id')
+            ->select('factura.id as idfactura', 'factura.nombre_cliente as nombrecliente', 'factura.vendedor as vendedor',  'factura.fecha_emision', 'factura.fecha_entrega', 'factura.descripcion as descripcion', 'factura.valor_total as total', DB::raw ( 'sum(pedido.cantidad) as cantidad' ))
+            ->groupBy('factura.id', 'factura.nombre_cliente', 'factura.vendedor', 'factura.fecha_entrega', 'factura.fecha_emision', 'factura.descripcion', 'factura.valor_total')->get();
+            return $datospedidos;
+    }
+
+
+    public function Lista_produccion(){
+        $listPedidos=DB::table('producto')
+        ->join('pedido','pedido.id_producto','=','producto.id')
+        ->join("factura", "factura.id", "=", "pedido.id_factura")
+        ->select('pedido.id_factura as numeropedido', 'pedido.cantidad as cantidad',  'producto.calibre_producto as tipoproducto', 'factura.fecha_entrega', 'factura.nombre_cliente', 'factura.descripcion')
+        ->groupBy('pedido.id_factura',  'pedido.cantidad', 'producto.calibre_producto', 'factura.fecha_entrega', 'factura.nombre_cliente', 'factura.descripcion')->get();
+        return $listPedidos;
+    }
+
     public function Buscar_Pedido_ID($IdProducto){
 
         if (strlen($IdProducto) > 0) {

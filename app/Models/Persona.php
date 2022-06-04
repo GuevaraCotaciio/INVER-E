@@ -102,6 +102,35 @@ class Persona extends Model
         }
     }
 
+    public function Actualizar_DatosPersonal($datos, $id){
+        try {
+            $persona=Persona::findOrFail($id);
+            $persona->nombre         = $datos->get('Firstname');
+            $persona->apellido       = $datos->get('Lastname');
+            $persona->tipo_documento = $datos->get('tipoDoc');
+            $persona->documento      = $datos->get('document');
+            $persona->fecha_nacimiento = $datos->get('age');
+            $persona->telefono       = $datos->get('phone');
+            $persona->ciudad         = $datos->get('city');
+            $persona->direccion      = $datos->get('adress');
+            $persona->email          = $datos->get('email');
+            if ($datos->hasFile('archivo_cliente')) {
+                $persona->avatar     = $datos->file('archivo_cliente')->store('public');
+            }else{
+                $persona->avatar     = $persona->avatar;
+            }
+            $persona->update();
+            DB::commit();
+            return "Actualizado";
+
+        } catch (\Exception $e) {
+            DB::rollBack();  //si la transaccion anterior es nula
+            throw $e;
+            return "error";
+        }
+    }
+
+
 
     public function Buscar_Personas($Nombre, $TipoPersona){
 

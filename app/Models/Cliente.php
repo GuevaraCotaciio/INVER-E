@@ -65,7 +65,6 @@ class Cliente extends Model
 
 
 
-
     public function Actualizar_Cliente($id, $tipo){
         try {
 

@@ -24,15 +24,19 @@ class factura extends Model
     }
 
 
-
     public function Guardar_factura($datos){
 
         // if (count($datos) > 0) {
             $factura = new factura();      // guarda los datos en la tabla factura
             $factura->id                 = $factura->ID_Factura();
             $factura->id_cliente         = $datos->idUsuario;
+            $factura->nombre_cliente     = $datos->NombreCliente;
             $factura->vendedor           = $datos->nombre_vendedor;
+            $factura->fecha_emision	     = $datos->fecha_emision;
             $factura->fecha_entrega      = $datos->FechaEntrega;
+            $factura->descripcion        = $datos->observaciones;
+            $factura->valor_total        = $datos->total;   //sacarlo desde una consulta para tomar los valores y sumarlos
+
             $factura->save();
             return "Guardado";
         // }

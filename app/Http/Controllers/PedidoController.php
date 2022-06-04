@@ -23,13 +23,16 @@ class PedidoController extends Controller
             $cliente = new Cliente();
             $persona = new Persona();
             $factura = new factura();
+            $pedidos = new Pedidos();
 
             $datoscliente = [];                                                         //
             $listaitem = [];                                                            // lista de items creados
             $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);        // lista de nombres de los clientes
-            $listClientes = $persona->Lista_Personas_General("Cliente");                // lista de clientes activos
             $idfactura = $factura->ID_Factura();                                        // ID DE LA FACTURA
-            return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listaitem', 'idfactura'));
+            $listClientes = $persona->Lista_Personas_General("Cliente");                // lista de todos los clientes activos
+            $listPedidos = $pedidos->Lista_Pedidos_General();                           // lista de todos los pedidos activos
+
+            return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listPedidos', 'listaitem', 'idfactura'));
 
     }
 
@@ -57,29 +60,31 @@ class PedidoController extends Controller
     }
 
 
-
     public function pedidos_save(Request $request){
-            //  dd($request);
         try {
 
-            if ($request->GuardarProducto == "nuevoitem") {   //  almacena informacion en tabla temporal
+            if ($request->GuardarProducto == "nuevoitem") {                 //  almacena informacion en tabla temporal
 
                 $pedido_temp = new Pedido_temp();
-                if ($pedidosT = $pedido_temp->Guardar_items($request) == "Guardados") {
+                if ($pedidosT = $pedido_temp->Guardar_items($request) == "Guardados") {          //guardo los item temporalmente es esta tabla pedidostemp
 
                     $cliente = new Cliente();
                     $persona = new Persona();
                     $productos = new Producto();
                     $factura = new factura();
+                    $pedidos = new Pedidos();
 
                     $listaitem = $pedido_temp->Buscar_ItemsTemp();                               // lista de items creados
                     $datoscliente = $cliente->Buscar_Cliente_pedidos($request->idUsuario);       //lista de cliente seleccionado
                     $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);         // lista de nombres de los clientes
-                    $listClientes = $persona->Lista_Personas_General("Cliente");                 // lista de clientes activos
                     $idfactura = $factura->ID_Factura();                                         // ID DE LA FACTURA
                     $listaProdctos = $productos->Buscar_Productos();                             // Lista de buscar productos
+
+                    $listClientes = $persona->Lista_Personas_General("Cliente");                 // lista de todos los clientes activos
+                    $listPedidos = $pedidos->Lista_Pedidos_General();                            // lista de todos los pedidos activos
                     echo "nuevo producto";
-                    return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listaitem', 'listaProdctos', 'idfactura'));
+
+                    return view('pedidos', compact('datoscliente','nombreclientes', 'listClientes', 'listPedidos', 'listaitem', 'listaProdctos', 'idfactura'));
 
                 }else{
 
@@ -88,45 +93,80 @@ class PedidoController extends Controller
             }else if ($request->GuardarFactura == "crearfactura") {         // guarda todos los datos y crea la factura
 
                 $factura = new factura();
-                if ($factura->Guardar_factura($request) == "Guardado") {    // guarda todos los datos y crea la factura
+                $pedido_temp = new Pedido_temp();
+
+                $datosTemp=DB::table('facturatemp')                     // consulta datos de la tabla facturatemp
+                ->select('id', 'numero_factura', 'id_cliente', 'id_producto', 'vendedor', 'cantidad', 'valor')->get();
+                //dd($datosTemp);
+
+                if (strlen($request->nombre_producto) > 0 &&  strlen($request->cantidad_producto) > 0 ) {       // validación si el ultimo campo de datos en el formulario tiene datos, si tiene los guarda
+
+                   if (count($datosTemp) > 0) {            // Valida si hay datos guardados en tabla temp
+
+                       if ($factura->Guardar_factura($request) == "Guardado") {    // guarda todos los datos y crea la factura
+
+                           // $datosFac = DB::table('factura')                         // consulta datos de la tabla factura
+                           // ->select('id', 'id_cliente', 'vendedor', 'fecha_entrega','descripcion', 'valor_total')->get();
+
+                           $pedidos = new Pedidos();
+                           foreach ($datosTemp as $DatosFactura) {                                                     // guarda todos los datos y crea el pedido
+                               $pedidos->Guardar_pedido($DatosFactura->id_producto, $DatosFactura->numero_factura, $DatosFactura->cantidad);
+                           }
+
+                           $IDPRODUCT = intval(preg_replace('/[^0-9]+/', '', $request->nombre_producto), 10);  //saco el numero de la cadena de texto
+                           if ($pedidos->Guardar_pedido($IDPRODUCT, $request->id_factura, $request->cantidad_producto) == "Guardado") {          //guarda el pedido y lo relaciona con la factura
+
+                               if($pedido_temp->Eliminar_facturaTEMP($request->id_factura) == "Eliminado"){                        // elimina los datos de la tabla temporal
+                                   return redirect()->route('pedidos.general')->with('fine','Pedido generado de forma exitosa!.');
+                               }else{
+                                   return redirect()->route('pedidos.general')->with('fail','Error al eliminar datos temporales!.');
+                               }
+                           }else {
+                               return redirect()->route('pedidos.general')->with('fail','Error al guardar los datos del pedido!.');
+                           }
+                       }else{
+                           return redirect()->route('pedidos.general')->with('fail','Error al guardar los datos de la factura.');
+                       }
 
 
-                    $datosTemp=DB::table('facturatemp')                     // consulta datos de la tabla facturatemp
-                    ->select('id', 'numero_factura', 'id_cliente', 'id_producto', 'vendedor', 'cantidad', 'valor')->get();
-                    // dd($datosTemp);
+                   }else{                                  // si no tiene datos solo guarda lo que triga del formulario
 
-                    $datosFac = DB::table('factura')                         // consulta datos de la tabla factura
-                    ->select('id', 'id_cliente', 'vendedor', 'fecha_entrega')->get();
+                       if ($factura->Guardar_factura($request) == "Guardado") {    // guarda todos los datos y crea la factura
 
-                    if (strlen($request->nombre_producto) > 0 &&  strlen($request->cantidad_producto) > 0 ) {      // validación si el ultimo campo tiene datos o no
+                           $pedidos = new Pedidos();
+                           $IDPRODUCT = intval(preg_replace('/[^0-9]+/', '', $request->nombre_producto), 10);  //saco el numero de la cadena de texto
+                           if ($pedidos->Guardar_pedido($IDPRODUCT, $request->id_factura, $request->cantidad_producto) == "Guardado") {          //guarda el pedido y lo relaciona con la factura
+                               return redirect()->route('pedidos.general')->with('fine','Pedido generado de forma exitosa!.');
+                           }else {
+                               return redirect()->route('pedidos.general')->with('fail','Error al guardar los datos del pedido!.');
+                           }
+                       }else{
+                           return back()->with('fail','Error al guardar los datos de la factura.');
+                       }
+                   }
 
-                        $pedidos = new Pedidos();                               // guarda todos los datos y crea el pedido
+                }else{                              // validación si el ultimo campo de datos en el formulario tiene datos, si no tiene no hace nada
+                   if (count($datosTemp) > 0) {            // Valida si hay datos guardados en tabla temp
 
-                        foreach ($datosTemp as $DatosFactura) {
-                            $pedidos->Guardar_pedido($DatosFactura->id_producto, $DatosFactura->numero_factura, $DatosFactura->cantidad);
-                        }
+                       if ($factura->Guardar_factura($request) == "Guardado") {    // guarda todos los datos y crea la factura
 
-                        $IDPRODUCT = intval(preg_replace('/[^0-9]+/', '', $request->nombre_producto), 10);  //saco el numero de la cadena de texto
-                        if ($pedidos->Guardar_pedido($IDPRODUCT, $request->id_factura, $request->cantidad_producto) == "Guardado") {
-                            return redirect()->route('pedidos.general')->with('fine','Producto guardado exitosamente.');
-                        }else {
-                            echo "fallo";
-                        }
+                           $pedidos = new Pedidos();
+                           foreach ($datosTemp as $DatosFactura) {                         // guarda todos los datos y crea el pedido y lo relaciona con la factura
+                               $pedidos->Guardar_pedido($DatosFactura->id_producto, $DatosFactura->numero_factura, $DatosFactura->cantidad);
+                           }
 
-                    }else{
-
-                        $pedidos = new Pedidos();                               // guarda todos los datos y crea el pedido
-                        foreach ($datosTemp as $DatosFactura) {
-                            $pedidos->Guardar_pedido($DatosFactura->id_producto, $DatosFactura->numero_factura, $DatosFactura->cantidad);
-                        }
-                        return redirect()->route('pedidos.general')->with('fine','Producto guardado exitosamente.');
-
-                    }
-
-                }else{
-                    return back()->with('fail','Error  al intentar guardar los datos de la factura.');
+                           if ($pedido_temp->Eliminar_facturaTEMP($request->id_factura) == "Eliminado") {                        // elimina los datos de la tabla temporal
+                               return redirect()->route('pedidos.general')->with('fine', 'Pedido generado de forma exitosa!.');
+                           } else {
+                               echo "fallo";
+                           }
+                       } else {
+                           return back()->with('fail', 'Error  al intentar guardar los datos de la factura.');
+                       }
+                   }else{
+                       return back();
+                   }
                 }
-
             }
 
         } catch (\Exception $e) {

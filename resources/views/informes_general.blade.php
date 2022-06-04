@@ -31,7 +31,7 @@
               <a class="ps-0 pe-0 nav-link" href="{{ route('informes.clientes') }}"><h5 class="card-title">Informe Clientes</h5></a>
               <div class="d-flex align-items-center">
                 <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                  <a href="{{ route('informes.clientes') }}"><i class="bi bi-person-check" style="color: #2eca6a;"></i></a>
+                  <a href="{{ route('informes.clientes') }}"><i class="bi bi-person-lines-fill" style="color: #2eca6a;"></i></a>
                 </div>
                 <div class="ps-2">
                   <h6>145</h6>
@@ -46,7 +46,7 @@
               <a class="ps-0 pe-0 nav-link" href="{{ route('informes.productos') }}"><h5 class="card-title">Informe Productos</h5></a>
               <div class="d-flex align-items-center">
                 <div  style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                  <a href="{{ route('informes.productos') }}"><i class="bi bi-clipboard-check" style="color: #2eca6a;"></i></a>
+                  <a href="{{ route('informes.productos') }}"><i class="bi bi-list-columns" style="color: #2eca6a;"></i></a>
                 </div>
                 <div class="ps-2">
                   <h6>145</h6>
@@ -58,10 +58,10 @@
 
         <div class="col-sm-2 bg-white ms-4">
            <div class="pe-0 card-body">
-              <a class="ps-0 pe-0 nav-link" href="{{ route('productos.general') }}"><h5 class="card-title">Informe Pedidos</h5></a>
+              <a class="ps-0 pe-0 nav-link" href="{{ route('informes.pedidos') }}"><h5 class="card-title">Informe Pedidos</h5></a>
               <div class="d-flex align-items-center">
                 <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                  <a href="{{ route('productos.general') }}"><i class="bi bi-cart4" style="color: #2eca6a;"></i></a>
+                  <a href="{{ route('informes.pedidos') }}"><i class="bi bi-card-checklist" style="color: #2eca6a;"></i></a>
                 </div>
                 <div class="ps-2">
                   <h6>145</h6>
@@ -73,10 +73,10 @@
 
         <div class="col-sm-2 bg-white ms-4">
             <div class="pe-0 card-body">
-               <a class="ps-0 pe-0 nav-link" href="{{ route('productos.general') }}"><h5 class="card-title">Informe Producción</h5></a>
+               <a class="ps-0 pe-0 nav-link" href="{{ route('informes.produccion') }}"><h5 class="card-title">Informe Producción</h5></a>
                <div class="d-flex align-items-center">
                  <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                   <a href="{{ route('productos.general') }}"><i class="bi bi-cart4" style="color: #2eca6a;"></i></a>
+                   <a href="{{ route('informes.produccion') }}"><i class="bi bi-list-columns-reverse" style="color: #2eca6a;"></i></a>
                  </div>
                  <div class="ps-2">
                    <h6>145</h6>

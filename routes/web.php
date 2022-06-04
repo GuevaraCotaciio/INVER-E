@@ -39,8 +39,11 @@ Route::delete('/productos-delete/{producto}', [App\Http\Controllers\PedidoContro
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Rutas del Controlador del modulo Configuracion
 //Rutas de GUI
-Route::get('/configuracion/{user}/', [App\Http\Controllers\ConfigController::class, 'empresa_index'])->name('configuracion.general');
-Route::post('/configuracion-SaveEmpresa', [App\Http\Controllers\EmpresaController::class, 'empresa_save'])->name('configuracion.SaveEmpresa');
+Route::get('/configuracion/datos-empresa/', [App\Http\Controllers\EmpresaController::class, 'empresa_update'])->name('empresa.update');         //ruta de actualizar datos empresa
+Route::get('/configuracion/{user}/', [App\Http\Controllers\ConfigController::class, 'empresa_index'])->name('configuracion.general');           // ruta general de configuracion
+
+Route::post('/configuracion/guardar-empresa', [App\Http\Controllers\EmpresaController::class, 'empresa_save'])->name('configuracion.SaveEmpresa');      // guarda datos empresa
+Route::post('/configuracion/actualizar-empresa/{empresa}', [App\Http\Controllers\EmpresaController::class, 'empresa_edit'])->name('configuracion.editEmpresa');   // actualiza datos empresa
 
 
 
@@ -94,12 +97,18 @@ Route::delete('/clientes-delete/{cliente}', [App\Http\Controllers\ClienteControl
 Route::get('/Informes', [App\Http\Controllers\InformeController::class, 'informes_index'])->name('informes.general');
 
 //Rutas de los informes
-Route::get('/Informes/clientes', [App\Http\Controllers\InformeController::class, 'informes_clientes'])->name('informes.clientes');
-Route::get('/Informes/clientes-general', [App\Http\Controllers\InformeController::class, 'informePDF_clientes'])->name('informe.pdf.clientes'); //informe clientes
+Route::get('/Informes/clientes', [App\Http\Controllers\InformeController::class, 'informes_clientes'])->name('informes.clientes');              // vista de informes de clientes
+Route::get('/Informes/clientes-general', [App\Http\Controllers\InformeController::class, 'informePDF_clientes'])->name('informe.pdf.clientes'); //informe PDF clientes
 
-Route::get('/Informes/Productos', [App\Http\Controllers\InformeController::class, 'informes_productos'])->name('informes.productos');
-Route::get('/Informes/Productos-disponibles', [App\Http\Controllers\InformeController::class, 'InformePDF_ProductosDisponibles'])->name('informe.pdf.productosdisponibles'); //informe Productos
-Route::get('/Informes/Productos-vencidos', [App\Http\Controllers\InformeController::class, 'InformePDF_ProductosVencidos'])->name('informe.pdf.productosvencidos'); //informe Productos
+Route::get('/Informes/Productos', [App\Http\Controllers\InformeController::class, 'informes_productos'])->name('informes.productos');           // vista de informes de productos
+Route::get('/Informes/Productos-disponibles', [App\Http\Controllers\InformeController::class, 'InformePDF_ProductosDisponibles'])->name('informe.pdf.productosdisponibles'); //informe PDF Productos
+Route::get('/Informes/Productos-vencidos', [App\Http\Controllers\InformeController::class, 'InformePDF_ProductosVencidos'])->name('informe.pdf.productosvencidos'); //informe PDF Productos
+
+Route::get('/Informes/Pedidos', [App\Http\Controllers\InformeController::class, 'informes_pedidos'])->name('informes.pedidos');             // vista de informes pedidos
+Route::get('/Informes/Pedidos-general', [App\Http\Controllers\InformeController::class, 'informePDF_pedidos'])->name('informe.pdf.pedidos'); //informe PDF pedidos
+
+Route::get('/Informes/Produccion', [App\Http\Controllers\InformeController::class, 'informes_produccion'])->name('informes.produccion');             // vista de informes producción
+Route::get('/Informes/produccion-general', [App\Http\Controllers\InformeController::class, 'informePDF_produccion'])->name('informe.pdf.produccion'); //informe PDF produccion
 
 
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('inicio');

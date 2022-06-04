@@ -35,7 +35,7 @@
 
                               <div class="d-flex align-items-center">
                                 <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                                  <a href="{{ route('productos.create') }}"><i class="bi bi-person-check" style="color: #2eca6a;"></i></a>
+                                  <a href="{{ route('productos.create') }}"><i class="bi bi-cart-plus" style="color: #2eca6a;"></i></a>
                                 </div>
                                 <div class="ps-2">
                                   <h6>145</h6>
@@ -47,10 +47,10 @@
 
                         <div class="col-sm-3 bg-white ms-4" >
                            <div class="card-body">
-                              <a class=" nav-link" href="#"><h5 class="card-title">Informes Productos</h5></a>
+                              <a class=" nav-link" href="{{ route('informes.productos') }}"><h5 class="card-title">Informes Productos</h5></a>
                               <div class="d-flex align-items-center">
                                 <div  style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                                  <a href="#"><i class="bi bi-clipboard-check" style="color: #2eca6a;"></i></a>
+                                  <a href="{{ route('informes.productos') }}"><i class="bi bi-file-earmark-bar-graph" style="color: #2eca6a;"></i></a>
                                 </div>
                                 <div class="ps-2">
                                   <h6>145</h6>

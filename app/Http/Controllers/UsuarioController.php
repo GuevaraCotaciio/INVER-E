@@ -116,16 +116,14 @@ class UsuarioController extends Controller
             if ($request->rol == "UserPersonal") {
 
                  // dd($request);f
-                 if($persona->Actualizar_Persona($request, $idp) == "Actualizado"){
+                 if($persona->Actualizar_DatosPersonal($request, $idp) == "Actualizado"){
+                    return redirect()->route('configuracion.general', $request->ID_usuario)->with('fine','Información actualizada correctamente.');
 
-                    if ($usuario->Actualizar_Usuario($request->id_user, $request->nombreuser, $request->estado, $request->email, $request->cargo) == "Actualizado") {
-                        return redirect()->route('usuarios.general')->with('fine','Usuario actualizado correctamente.');
-                    }else{
-                        return back()->with('fail','Ha ocurrido un error al actualizar los datos del usuario.');
-                    }
                 }else{
-                    return back()->with('fail','Ha ocurrido un error al guardar la información del usuario.');
+                    return back()->with('fail','Ha ocurrido un error al guardar la información personal.');
                 }
+
+
 
             }elseif ($request->rol == "UsuariosGeneral") {
 

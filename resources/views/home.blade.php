@@ -31,7 +31,7 @@
 
                   <div class="d-flex align-items-center">
                     <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class="d-flex align-items-center justify-content-center">
-                      <a href="{{ route('clientes_general') }}"><i class="bi bi-person-check" style="color: #2eca6a;"></i></a>
+                      <a href="{{ route('clientes_general') }}"><i class="bi bi-people" style="color: #2eca6a;"></i></a>
                     </div>
                     <div class="ps-1">
                       <h6>Cantidad</h6>
@@ -98,7 +98,7 @@
                   <a class=" nav-link" href="{{ route('usuarios.general') }}"><h5 class="card-title">Usuarios</h5></a>
                   <div class="d-flex align-items-center">
                     <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                      <a href="{{ route('usuarios.general') }}"><i class="bi bi-people" style="color: #2eca6a;"></i></a>
+                      <a href="{{ route('usuarios.general') }}"><i class="bi bi-person-rolodex" style="color: #2eca6a;"></i></a>
                     </div>
                     <div class="ps-1">
                       <h6>Cantidad</h6>

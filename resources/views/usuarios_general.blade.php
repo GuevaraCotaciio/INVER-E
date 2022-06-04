@@ -34,7 +34,7 @@
 
                   <div class="d-flex align-items-center">
                     <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                      <a href="{{ route('usuarios.create') }}"><i class="bi bi-person-check" style="color: #2eca6a;"></i></a>
+                      <a href="{{ route('usuarios.create') }}"><i class="bi bi-person-plus" style="color: #2eca6a;"></i></a>
                     </div>
                     <div class="ps-2">
                       <h6>145</h6>
@@ -47,10 +47,10 @@
 
             <div class="col-sm-3 bg-white ms-4" >
                <div class="card-body">
-                  <a class=" nav-link" href="#"><h5 class="card-title">Actualizar Usuario</h5></a>
+                  <a class=" nav-link" href="{{ route('informes.general') }}"><h5 class="card-title">Informe Usuarios</h5></a>
                   <div class="d-flex align-items-center">
                     <div  style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
-                      <a href="#"><i class="bi bi-clipboard-check" style="color: #2eca6a;"></i></a>
+                      <a href="{{ route('informes.general') }}"><i class="bi bi-file-earmark-bar-graph" style="color: #2eca6a;"></i></a>
                     </div>
                     <div class="ps-2">
                       <h6>145</h6>
@@ -62,14 +62,14 @@
 
             <div class="col-sm-3 bg-white ms-4" >
                <div class="card-body">
-                  <a class=" nav-link" href="#"><h5 class="card-title">Eliminar Usuario</h5></a>
+                  <a class=" nav-link" href="#"><h5 class="card-title">--- proximamente</h5></a>
                   <div class="d-flex align-items-center">
                     <div style="border-radius: 50%!important; background-color:#e0f8e9; width: 64px; height: 64px; font-size: 32px;" class=" d-flex align-items-center justify-content-center">
                       <a href="#"><i class="bi bi-cart4" style="color: #2eca6a;"></i></a>
                     </div>
                     <div class="ps-2">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6></h6>
+                      <span class="text-success small pt-1 fw-bold"></span> <span class="text-muted small pt-2 ps-1"></span>
                     </div>
                   </div>
                </div>

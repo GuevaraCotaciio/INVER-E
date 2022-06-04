@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedidos;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +22,9 @@ class InformeController extends Controller
     }
 
 
-    public function informes_clientes() //vista
-    {
+
+//==================================================================
+    public function informes_clientes() {           //vista
         //información general de clientes
         $InfoClientes=DB::table('persona')
         ->select('id', 'nombre', 'apellido', 'documento', 'genero', 'fecha_nacimiento', 'telefono', 'ciudad', 'direccion', 'email')
@@ -63,7 +65,30 @@ class InformeController extends Controller
 
 
 
+//==================================================================
+    public function informes_pedidos() //vista general
+    {
+        $pedidos = NEW Pedidos();
+        $listPedidos = $pedidos->Lista_Pedidos_General();
+        return view('informes_pedidos', compact('listPedidos'));
+    }
 
+    public function informePDF_pedidos() //vista para generar el PDF
+    {
+        $pedidos = NEW Pedidos();
+        $listPedidos = $pedidos->Lista_Pedidos_General();
+        //dd($listClientes);
+
+        //Genero el PDF
+        $pdr =PDF::setOptions([ 'dpi' => 150 , 'defaultFont' => 'verdana' ])->setPaper('a4', 'landscape')->setWarnings(false); //perzonalizo
+        $pdf = PDF::loadview('InformesPDF/informe_pedido_general',compact('listPedidos')); //creo el PDF
+        return $pdf->stream();  //Retorno el PDF
+    }
+
+
+
+
+//==================================================================
     public function informes_productos() //vista
     {
         //información general de clientes
@@ -83,7 +108,7 @@ class InformeController extends Controller
         return view('informes_productos', compact('productosVencidos','ProductosAlmacenados'));
     }
 
-    public function InformePDF_ProductosVencidos() //vista
+    public function InformePDF_ProductosVencidos() //vista para generar el PDF
     {
         $productosVencidos=DB::table('proveedor')
         ->join('producto','producto.id_proveedor','=','proveedor.id')
@@ -97,7 +122,7 @@ class InformeController extends Controller
         return $pdf->stream();  //Retorno el PDF
     }
 
-    public function InformePDF_ProductosDisponibles() //vista
+    public function InformePDF_ProductosDisponibles() //vista para generar el PDF
     {
         $productosDisponibles=DB::table('proveedor')
         ->join('producto','producto.id_proveedor','=','proveedor.id')
@@ -108,6 +133,27 @@ class InformeController extends Controller
         //Genero el PDF
         $pdr =PDF::setOptions([ 'dpi' => 150 , 'defaultFont' => 'verdana' ])->setPaper('a4', 'landscape')->setWarnings(false); //perzonalizo
         $pdf = PDF::loadview('InformesPDF/informe_producto_disponible',compact('productosDisponibles')); //creo el PDF
+        return $pdf->stream();  //Retorno el PDF
+    }
+
+
+
+//==================================================================
+    public function informes_produccion() //vista general
+    {
+        $pedidos = NEW Pedidos();
+        $listPedidos = $pedidos->Lista_produccion();
+        return view('informes_produccion', compact('listPedidos'));
+    }
+
+    public function informePDF_produccion() //vista para generar el PDF
+    {
+        $pedidos = NEW Pedidos();
+        $listPedidos = $pedidos->Lista_produccion();
+
+        //Genero el PDF
+        $pdr =PDF::setOptions([ 'dpi' => 150 , 'defaultFont' => 'verdana' ])->setPaper('a4', 'landscape')->setWarnings(false); //perzonalizo
+        $pdf = PDF::loadview('InformesPDF/informe_produccion_general',compact('listPedidos')); //creo el PDF
         return $pdf->stream();  //Retorno el PDF
     }
 

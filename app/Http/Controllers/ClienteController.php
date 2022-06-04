@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\factura;
 use App\Models\Persona;
 use App\Models\Producto;
+use App\Models\Pedidos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -124,16 +125,21 @@ class ClienteController extends Controller
         $cliente = new Cliente();
         $persona = new Persona();
         $productos = new Producto();
+        $pedidos = new Pedidos();
         $factura = new factura();
 
-        $idcliente = substr($request->NombreCliente, 0, 1);
+
+        $idcliente = substr($request->NombreCliente, 0, 1);                          //se estrae solo el id del cliente
         $listaitem = [];
-        $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);    // lista de nombres de los clientes
-        $datoscliente = $cliente->Buscar_Cliente_pedidos($idcliente);           // datos del cliente seleccionado
-        $listClientes = $persona->Lista_Personas_General("Cliente");            // lista de clientes activos
-        $idfactura = $factura->ID_Factura();                                        // ID DE LA FACTURA
-        $listaProdctos = $productos->Buscar_Productos();
-        return view('pedidos', compact('nombreclientes', 'datoscliente', 'listClientes', 'listaProdctos', 'listaitem', 'idfactura'));
+        $nombreclientes = $cliente->Buscar_Cliente($request->NombreCliente);         // lista de nombres de los clientes
+        $datoscliente = $cliente->Buscar_Cliente_pedidos($idcliente);                // datos del cliente seleccionado
+
+        $idfactura = $factura->ID_Factura();                                         // ID DE LA FACTURA
+        $listaProdctos = $productos->Buscar_Productos();                             //
+
+        $listClientes = $persona->Lista_Personas_General("Cliente");                 // lista de todos los clientes activos
+        $listPedidos = $pedidos->Lista_Pedidos_General();                            // lista de todos los pedidos activos
+        return view('pedidos', compact('nombreclientes', 'datoscliente', 'listClientes', 'listPedidos', 'listaProdctos', 'listaitem', 'idfactura'));
 
     }
 

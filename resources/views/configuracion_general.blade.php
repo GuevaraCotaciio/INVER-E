@@ -58,12 +58,19 @@
                         <!-- perfil de empresa -->
                         <div class="tab-pane fade active show pt-3 " id="editar_empresa">
 
+                            @if (session()->has('fineE'))
+                            <div class="alert alert-success border-2 border-success ms-4 me-4">{{ session('fineE')}}</div>
+                            @elseif (session()->has('failE'))
+                            <div class="alert alert-danger">{{ session('failE')}}</div>
+                            @endif
+
                             @if (count($datosempresa)<= 0 )
 
-                            <form action="{{ route('configuracion.SaveEmpresa') }}" >
+                            <form action="{{ route('configuracion.SaveEmpresa') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="number" hidden name="id_user" value="{{Auth::user()->id}}">
 
-                                @dd($datosempresa)
+                                {{-- @dd($datosempresa) --}}
 
                                 <div class="row col-12 mb-3">
                                   <label  class="col-md-4 col-lg-3 col-form-label">Peril Empresarial</label>
@@ -92,7 +99,7 @@
                                 <div class="row col-12 mb-3">
                                   <label for="Nombre_E" class="col-md-4 col-lg-3 col-form-label">Nombre Completo</label>
                                   <div class="col-md-8 col-lg-8">
-                                    <input name="Nombre_E" type="text" class="form-control" id="Nombre_E" value="{{ $datosempresa->nombre }}">
+                                    <input name="Nombre_E" type="text" class="form-control" id="Nombre_E" placeholder="* Nombre empresa">
                                   </div>
                                 </div>
 
@@ -182,23 +189,7 @@
                                 <div class="row col-12 mb-3">
                                     <label  class="col-md-4 col-lg-3 col-form-label">Peril Empresarial</label>
                                     <div class="col-md-8 col-lg-9">
-                                      <img src="{{ Storage::url($infoempresa->imagen) }}" alt="Profile" style="width: 80px;">
-
-                                      <div class="pt-2">
-                                          <div class="input-group mb-3 ">
-
-                                              <div class="custom-file me-2">
-                                                  <input type="file" hidden class="custom-file-input" id="inputFile" name="archivo">
-                                                  <a class="btn btn-success" title="Cargar nueva imagen" name="imagen">
-                                                      <label class="custom-file-label" for="inputFile"><i class="bi bi-upload"></i></label>
-                                                  </a>
-                                              </div>
-
-                                              <a class="btn btn-danger" title="Eliminar la imagen"><i class="bi bi-trash"></i></a>
-
-                                            </div>
-                                      </div>
-
+                                      <img src="{{ Storage::url($infoempresa->imagen) }}" alt="Profile" style="width: 150px;">
                                     </div>
                                 </div>
 
@@ -213,16 +204,7 @@
                                     <label for="inputText" class="col-md-4 col-lg-3 col-form-label">Tipo Empresa</label>
                                     <div class="col-md-8 col-lg-8">
                                       <div class="input-group">
-                                        <select class="form-select form-select-lg" name="tipoE">
-                                          <option selected>Seleccione el tipo</option>
-
-                                          <option value="Productora">Productora</option>
-
-                                          <option value="Manufacturera">Manufacturera</option>
-
-                                          <option value="Agricola">Agricola</option>
-
-                                        </select>
+                                        <input name="tipoE" type="text" class="form-control " id="tipoE" disabled value="{{ $infoempresa->tipo_empresa }}">
                                      </div>
                                     </div>
                                 </div>
@@ -230,7 +212,7 @@
                                 <div class="row col-12 mb-3">
                                   <label for="about" class="col-md-4 col-lg-3 col-form-label">Descripción corporativa</label>
                                   <div class="col-md-8 col-lg-8">
-                                    <textarea name="description" class="form-control" id="about" style="height: 100px" disabled aria-valuenow="{{ $infoempresa->descripcion }}"></textarea>
+                                    <input name="description" class="form-control" id="about" style="height: 100px" disabled value="{{ $infoempresa->descripcion }}">
                                   </div>
                                 </div>
 
@@ -284,7 +266,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                  <button type="submit" class="btn btn-warning btn-lg">Actualizar información</button>
+                                  <a href="{{ route('empresa.update') }}" class="btn btn-warning btn-lg">Actualizar información</a>
                                 </div>
 
                             @endforeach
@@ -293,6 +275,12 @@
 
                         <!-- Editar Perfil -->
                         <div class="tab-pane fade pt-3" id="editar_perfil">
+
+                            @if (session()->has('fine'))
+                            <div class="alert alert-success border-2 border-success ms-4 me-4">{{ session('fine')}}</div>
+                            @elseif (session()->has('fail'))
+                            <div class="alert alert-danger">{{ session('fail')}}</div>
+                            @endif
 
                             @foreach ($datos_user as $usuario )
                             <form action="{{ route('usuarios.edit', $usuario->id_persona) }}" method="POST" enctype="multipart/form-data">
@@ -330,6 +318,7 @@
                                                 <h6 class="card-title">Información de usuario.</h6>
                                                 <p class=" fst-italic">Cargo:  <span class="ms-4">{{ Auth::user()->cargo  }}</span></p>
                                                 <input type="text" hidden name="rol" value="UserPersonal">
+                                                <input type="text" hidden name="ID_usuario" value="{{ $usuario->id_user }}">
                                                 <p class=" fst-italic">Genero: <span class="ms-3">{{ $usuario->genero }}</span></p>
                                                 <p class=" fst-italic">Edad:   <span class="ms-4">{{ $usuario->fecha_nacimiento }}</span></p>
                                             </div>
@@ -510,7 +499,6 @@
                             </div>
 
                         </div>
-
 
 
                     </div>

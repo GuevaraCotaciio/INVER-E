@@ -88,7 +88,7 @@
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-2 mb-3 p-0">
-                                <input class="form-control bi bi-calendar2-date bg-white border-0" type="date" value="<?php echo date('Y-m-d'); ?>"  id="fecha" readonly="readonly" />
+                                <input class="form-control bi bi-calendar2-date bg-white border-0" type="date" value="<?php echo date('Y-m-d'); ?>"  id="fecha" name="fecha_emision" readonly="readonly" />
                                 <label for="fecha">Fecha Emisión</label>
                             </div>
 
@@ -104,17 +104,17 @@
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-5 mt-2 mb-3 p-0 pe-2">
-                                <input class="form-control border-0" type="datetime-local" id="fecha" name="FechaEntrega" />
+                                <input class="form-control border-0" type="datetime-local" id="fecha" name="FechaEntrega" required  value="">
                                 <label for="fecha">Fecha y hora de entrega</label>
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-2 mt-2 mb-3 p-0 ms-4">
-                                <input class="form-control bi bi-calendar2-date bg-white border-0" type="text" value=" {{ $datos->direccion;}}"  id="fecha" readonly="readonly"/>
+                                <input class="form-control bi bi-calendar2-date bg-white border-0" type="text" value="{{ $datos->direccion}}"  id="fecha" readonly="readonly"/>
                                 <label for="fecha">Dirección</label>
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-2 mt-2 mb-3 p-0">
-                                <input type="text" class="form-control bg-white border-0" id="floatingInput" value="{{ $datos->telefono;}}" disabled>
+                                <input type="text" class="form-control bg-white border-0" id="floatingInput" value="{{ $datos->telefono}}" disabled>
                                 <label for="floatingInput ">Teléfono</label>
                             </div>
 
@@ -124,7 +124,7 @@
                             </div>
 
                             <div class="form-floating border-start border-info col-lg-11 mt-4 mb-3 p-0">
-                                <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                                <input type="text" class="form-control" id="floatingPassword" name="observaciones" value="" >
                                 <label for="floatingPassword">Observaciones</label>
                             </div>
 
@@ -206,10 +206,7 @@
                                             <td class="border-buttom border-info ">$ =<input type="text" class="border-0 mt-2 col-9 p-0 bg-light" name="Total" title="total de la cantidad por el valor del producto" readonly="readonly"></td>  {{-- total --}}
                                             <td class="border-buttom border-info "><a class="btn btn-sm btn-danger me-1">Eliminar</a><a class="btn btn-sm btn-warning">Editar</a> </td>    {{-- acciones --}}
                                         </tr>
-
                                         @endif
-
-
 
                                     </tbody>
                                   </table>
@@ -217,15 +214,15 @@
 
 
                                 <div class="row col-lg-12">   <!-- botones -->
-                                    <div class="row col-lg-2 ms-1 " id="caja">
+                                    <div class="row col-lg-2 ms-1 " id="cajaitem">
                                         <button type="submit" class="btn btn-primary border-info m-1" name="GuardarProducto" value="nuevoitem">+Producto</button>
                                         <button type="submit" class="btn btn-success border-info m-1" name="GuardarFactura" value="crearfactura">Enviar</button>
                                     </div>
                                     <div class=" row col-lg-10">
-                                        <div class="col-lg-7"></div>
-                                        <div class="col-lg-5 ps-0">
+                                        <div class="col-lg-7 "></div>
+                                        <div class="col-lg-4 ps-0 ms-3">
                                             <div class="row ps-0">
-                                                <h4>TOTAL:  <span> $58.200</span></h4>
+                                                <h4>TOTAL:  $<input class="border-0 mt-2 col-5 p-0 bg-white" type="text" value="0" name="total" readonly="readonly"></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -274,41 +271,45 @@
                       </div>
 
                       <div class="card-body">
-                        <h5 class="card-title">Lista de clientes</h5>
+                        <h5 class="card-title">Lista de pedidos</h5>
 
                         <table class="table">
                           <thead>
                               <tr>
-                                  <th scope="col" class="border border-white table-primary">ID</th>
-                                  <th scope="col" class="border border-white table-primary">Nombre</th>
-                                  <th scope="col" class="border border-white table-primary">Documento</th>
-                                  <th scope="col" class="border border-white table-primary">Genero</th>
-                                  <th scope="col" class="border border-white table-primary">Edad</th>
-                                  <th scope="col" class="border border-white table-primary">Teléfono</th>
-                                  <th scope="col" class="border border-white table-primary">Ciudad</th>
-                                  <th scope="col" class="border border-white table-primary">Dirección</th>
-                                  <th scope="col" class="border border-white table-primary">E-mail</th>
+                                  <th scope="col" class="border border-white table-primary">ID factura</th>
+                                  <th scope="col" class="border border-white table-primary">Cliente</th>
+                                  <th scope="col" class="border border-white table-primary">Vendedor</th>
+                                  <th scope="col" class="border border-white table-primary">Observaciones</th>
+                                  <th scope="col" class="border border-white table-primary">Fecha emisión</th>
+                                  <th scope="col" class="border border-white table-primary">Fecha entrega</th>
+                                  <th scope="col" class="border border-white table-primary">Total productos</th>
+                                  <th scope="col" class="border border-white table-primary">Valor total</th>
+                                  <th scope="col" class="border border-white table-primary">Acciones</th>
                                 </tr>
                           </thead>
 
                           <tbody>
-                              @if(count($listClientes)<=0)
+                              @if(count($listPedidos)<=0)
                                 <tr>
                                   <td colspan="10" class="text-danger"> No hay registros para el nombre solicitado</td>
                                 </tr>
                               @else
-                                @foreach ($listClientes as $clientes)
+                                @foreach ($listPedidos as $pedidos)
                                   <tr>
-                                    <td class="border-top">{{$clientes->id_cliente }}</td>
-                                    <td class="border-top">{{$clientes->nombre }} {{$clientes->apellido }}</td>
-                                    <td class="border-top">{{$clientes->documento }}</td>
-                                    <td class="border-top">{{$clientes->genero }}</td>
-                                    {{-- <td class="border-top">{{ $edad =floor(date('Y-m-d')/ ($clientes->fecha_nacimiento) ) }}</td> --}}
-                                    <td class="border-top">{{$clientes->fecha_nacimiento }}</td>
-                                    <td class="border-top">{{$clientes->telefono }}</td>
-                                    <td class="border-top">{{$clientes->ciudad }}</td>
-                                    <td class="border-top">{{$clientes->direccion }}</td>
-                                    <td class="border-top">{{$clientes->email }}</td>
+                                    <td class="border-top">{{$pedidos->idfactura }}</td>
+                                    <td class="border-top">{{$pedidos->nombrecliente }}</td>
+                                    <td class="border-top">{{$pedidos->vendedor }}</td>
+                                    <td class="border-top">{{$pedidos->descripcion }}</td>
+                                    <td class="border-top">{{$pedidos->fecha_emision }}</td>
+                                    <td class="border-top">{{$pedidos->fecha_entrega }}</td>
+                                    <td class="border-top">{{$pedidos->cantidad }}</td>
+                                    <td class="border-top">{{$pedidos->total }}</td>
+                                    <td class="border-top">
+
+                                        <a href="#" class="btn btn-primary btn-sm" title="Visualizar datos del pedido"><i class="bi bi-eye"></i></a>
+                                        <a href="#" class="btn btn-success btn-sm" title="Pedido entregado"><i class="bi bi-check-all"></i></a>
+
+                                    </td>
 
                                   </tr>
                                 @endforeach
@@ -320,7 +321,6 @@
 
                     </div>
                 </div>
-
 
                 <!-- seccion tabla de clientes -->
                 <div class="col-12 pe-5 pb-3">
@@ -389,7 +389,6 @@
                 </div>
 
             </div>
-
 
         </div><!-- End contenedor items -->
 
